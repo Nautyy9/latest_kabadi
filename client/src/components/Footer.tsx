@@ -27,19 +27,40 @@ export default function Footer() {
               <span className="text-xl font-bold">The Kabadi</span>
             </div>
             <p className="text-muted-foreground mb-4">
-              Making society eco-friendly, one pickup at a time. Sell your scrap at fair rates from the comfort of your home.
+              Making society eco-friendly, one pickup at a time. Sell your scrap
+              at fair rates from the comfort of your home.
             </p>
             <div className="flex gap-2">
-              <Button size="icon" variant="ghost" className="hover-elevate active-elevate-2" data-testid="link-facebook">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover-elevate active-elevate-2"
+                data-testid="link-facebook"
+              >
                 <SiFacebook className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="hover-elevate active-elevate-2" data-testid="link-twitter">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover-elevate active-elevate-2"
+                data-testid="link-twitter"
+              >
                 <SiX className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="hover-elevate active-elevate-2" data-testid="link-instagram">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover-elevate active-elevate-2"
+                data-testid="link-instagram"
+              >
                 <SiInstagram className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" className="hover-elevate active-elevate-2" data-testid="link-linkedin">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="hover-elevate active-elevate-2"
+                data-testid="link-linkedin"
+              >
                 <SiLinkedin className="h-5 w-5" />
               </Button>
             </div>
@@ -49,22 +70,42 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/services"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/rates"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Rates
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link
+                  href="/careers"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Careers
                 </Link>
               </li>
@@ -118,8 +159,12 @@ export default function Footer() {
             © 2024 The Kabadi. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-foreground transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-foreground transition-colors">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>
