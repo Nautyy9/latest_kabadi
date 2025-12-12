@@ -4,7 +4,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const pickupRequests = pgTable("pickup_requests", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey().default(sql`uuid_generate_v4()`),
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
@@ -16,7 +16,7 @@ export const pickupRequests = pgTable("pickup_requests", {
 });
 
 export const contactMessages = pgTable("contact_messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey().default(sql`uuid_generate_v4()`),
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone").notNull(),
@@ -26,7 +26,7 @@ export const contactMessages = pgTable("contact_messages", {
 });
 
 export const careerApplications = pgTable("career_applications", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id").primaryKey().default(sql`uuid_generate_v4()`),
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone").notNull(),

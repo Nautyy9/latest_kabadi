@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
+import WhyChooseKabadi from "@/components/WhyChooseKabadi";
 import { TrendingUp, Search, MapPin } from "lucide-react";
 import { useState, useMemo } from "react";
 
@@ -17,12 +18,12 @@ interface RateItem {
 const rateItems: RateItem[] = [
   { id: "newspaper", name: "Newspaper", rate: "₹6", unit: "/kg", description: "Old newspapers and print", color: "from-amber-300 to-amber-600", category: "Paper" },
   { id: "carton", name: "Carton", rate: "₹6", unit: "/kg", description: "Cardboard boxes", color: "from-amber-300 to-amber-600", category: "Paper" },
-  { id: "mix-plastic", name: "Mix Plastic", rate: "₹8", unit: "/kg", description: "Mixed plastic waste", color: "from-blue-400 to-blue-600", category: "Plastic" },
+  { id: "mix-plastic", name: "Mix Plastic", rate: "₹8", unit: "/kg", description: "Mixed plastic waste", color: "from-amber-400 to-amber-600", category: "Plastic" },
   { id: "books", name: "Books", rate: "₹3", unit: "/kg", description: "Old books and textbooks", color: "from-amber-300 to-amber-600", category: "Paper" },
   { id: "iron", name: "Iron", rate: "₹22", unit: "/kg", description: "Iron scrap and sheets", color: "from-red-700 to-red-900", category: "Metal" },
   { id: "tin", name: "Tin", rate: "₹20", unit: "/kg", description: "Tin containers", color: "from-slate-400 to-slate-600", category: "Metal" },
-  { id: "soft-plastic", name: "Soft Plastic", rate: "₹10", unit: "/kg", description: "Plastic bags and film", color: "from-blue-400 to-blue-600", category: "Plastic" },
-  { id: "hard-plastic", name: "Hard Plastic", rate: "₹12", unit: "/kg", description: "Hard plastic items", color: "from-blue-400 to-blue-600", category: "Plastic" },
+  { id: "soft-plastic", name: "Soft Plastic", rate: "₹10", unit: "/kg", description: "Plastic bags and film", color: "from-amber-400 to-amber-600", category: "Plastic" },
+  { id: "hard-plastic", name: "Hard Plastic", rate: "₹12", unit: "/kg", description: "Hard plastic items", color: "from-amber-400 to-amber-600", category: "Plastic" },
   { id: "ewaste", name: "E-waste", rate: "₹10", unit: "/kg", description: "Electronic waste", color: "from-purple-400 to-purple-600", category: "E-waste" },
   { id: "aluminum", name: "Aluminum", rate: "₹100", unit: "/kg", description: "Aluminum foil and cans", color: "from-gray-300 to-gray-600", category: "Metal" },
   { id: "steel", name: "Steel", rate: "₹18", unit: "/kg", description: "Steel and mild steel", color: "from-slate-400 to-slate-700", category: "Metal" },
@@ -44,10 +45,10 @@ const rateItems: RateItem[] = [
   { id: "monitor-crt", name: "Monitor (CRT)", rate: "₹149", unit: "/pcs", description: "Old CRT monitors", color: "from-purple-400 to-purple-600", category: "E-waste" },
   { id: "monitor-lcd", name: "Monitor (LCD/LED)", rate: "₹49", unit: "/pcs", description: "LCD/LED monitors", color: "from-purple-400 to-purple-600", category: "E-waste" },
   { id: "cpu", name: "CPU", rate: "₹100", unit: "/pca", description: "Computer CPUs", color: "from-purple-400 to-purple-600", category: "E-waste" },
-  { id: "pet-bottle", name: "PET Bottle", rate: "₹5", unit: "/kg", description: "Plastic bottles", color: "from-blue-400 to-blue-600", category: "Plastic" },
+  { id: "pet-bottle", name: "PET Bottle", rate: "₹5", unit: "/kg", description: "Plastic bottles", color: "from-amber-400 to-amber-600", category: "Plastic" },
   { id: "printer", name: "Printer", rate: "₹25", unit: "/kg", description: "Old printers", color: "from-purple-400 to-purple-600", category: "E-waste" },
   { id: "ups-battery", name: "UPS (with battery)", rate: "₹249", unit: "/pcs", description: "UPS backup systems", color: "from-purple-400 to-purple-600", category: "E-waste" },
-  { id: "cooler-plastic", name: "Cooler (Plastic/Fibre)", rate: "₹12", unit: "/kg", description: "Plastic coolers", color: "from-blue-400 to-blue-600", category: "Plastic" },
+  { id: "cooler-plastic", name: "Cooler (Plastic/Fibre)", rate: "₹12", unit: "/kg", description: "Plastic coolers", color: "from-amber-400 to-amber-600", category: "Plastic" },
   { id: "cooler-tin", name: "Cooler (Tin)", rate: "₹15", unit: "/kg", description: "Metal coolers", color: "from-slate-400 to-slate-600", category: "Metal" },
   { id: "other", name: "Other", rate: "₹5", unit: "/pcs", description: "Other materials", color: "from-slate-400 to-slate-600", category: "Other" },
 ];
@@ -57,7 +58,7 @@ const locations = ["Delhi", "Mumbai", "Bangalore", "Chennai"];
 
 function RateCard({ item }: { item: RateItem }) {
   return (
-    <div className="bg-gray-100 dark:bg-gray-800 p-2.5 rounded-lg">
+    <div className="bg-kabadi-blue-light dark:bg-slate-900/50 p-3 rounded-2xl">
       <Card className="overflow-hidden hover-elevate h-full group bg-white dark:bg-slate-900 border-0 shadow-md hover:shadow-xl transition-all duration-300">
         <div className={`h-40 bg-gradient-to-br ${item.color} relative overflow-hidden`}>
           <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" />
@@ -74,8 +75,8 @@ function RateCard({ item }: { item: RateItem }) {
           
           <div className="mb-4">
             <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-green-700 dark:text-green-400">{item.rate}</span>
-              <span className="text-xs text-green-600 dark:text-green-500 font-semibold">{item.unit}</span>
+              <span className="text-3xl font-bold text-kabadi-emphasis">{item.rate}</span>
+              <span className="text-xs text-kabadi-primary font-semibold">{item.unit}</span>
             </div>
           </div>
 
@@ -107,12 +108,13 @@ export default function Rates() {
     <div className="min-h-screen">
       <Header />
       <main>
-        <section className="py-20 bg-gradient-to-br from-green-50/50 to-white dark:from-green-950/20 dark:to-slate-950">
+        <section className="relative py-20 overflow-visible">
+          <div className="absolute inset-0 -top-12  bg-gradient-to-b from-green-50 via-green-50/60 to-transparent -z-10 pointer-events-none"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 text-green-700 dark:text-green-400">
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6 ">
               Our Premium Rates
             </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto ">
               Get the best market rates for your scrap materials. Updated daily to ensure maximum value for your recyclables.
             </p>
           </div>
@@ -124,7 +126,7 @@ export default function Rates() {
             <div className="mb-10">
               {/* Location and Search */}
               <div className="flex gap-3 mb-6 flex-col sm:flex-row">
-                <div className="flex items-center gap-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 bg-white dark:bg-slate-800 w-full sm:w-56">
+                <div className="flex items-center gap-2 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2.5 bg-white dark:bg-slate-800 w-full sm:w-56">
                   <MapPin className="h-5 w-5 text-muted-foreground" />
                   <select
                     value={selectedLocation}
@@ -138,7 +140,7 @@ export default function Rates() {
                   </select>
                 </div>
 
-                <div className="flex items-center gap-2 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 bg-white dark:bg-slate-800 flex-1">
+                <div className="flex items-center gap-2 border border-slate-300 dark:border-slate-600 rounded-lg px-4 py-2.5 bg-white dark:bg-slate-800 flex-1">
                   <Search className="h-5 w-5 text-muted-foreground" />
                   <input
                     type="text"
@@ -159,8 +161,8 @@ export default function Rates() {
                     onClick={() => setSelectedCategory(cat)}
                     className={`px-6 py-2.5 rounded-lg font-semibold transition-all text-sm ${
                       selectedCategory === cat
-                        ? "bg-green-600 dark:bg-green-500 text-white"
-                        : "bg-gray-800 dark:bg-gray-700 text-gray-200 hover-elevate"
+                        ? "bg-kabadi-emphasis text-white"
+                        : "bg-slate-700 dark:bg-slate-600 text-slate-200 hover-elevate"
                     }`}
                     data-testid={`button-category-${cat.toLowerCase()}`}
                   >
@@ -189,46 +191,7 @@ export default function Rates() {
             </div>
 
             {/* Why Choose Section */}
-            <div className="mt-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20 rounded-2xl p-8 lg:p-12 border border-green-200/50 dark:border-green-800/50">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h2 className="text-3xl lg:text-4xl font-bold text-green-700 dark:text-green-400 mb-4">
-                    Why Choose theKabadi?
-                  </h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <span className="text-green-600 dark:text-green-400 font-bold text-lg mt-0.5">✓</span>
-                      <span className="text-muted-foreground">Best prices updated daily with live market rates</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-green-600 dark:text-green-400 font-bold text-lg mt-0.5">✓</span>
-                      <span className="text-muted-foreground">Transparent pricing with no hidden charges</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-green-600 dark:text-green-400 font-bold text-lg mt-0.5">✓</span>
-                      <span className="text-muted-foreground">Free pickup from your location within 24 hours</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-green-600 dark:text-green-400 font-bold text-lg mt-0.5">✓</span>
-                      <span className="text-muted-foreground">Instant payment upon verification and weighing</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-lg border border-green-200 dark:border-green-800">
-                  <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Sell?</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Schedule a free pickup today and get paid the best rates in the market for your scrap materials.
-                  </p>
-                  <button 
-                    onClick={() => window.location.href = "/#request-pickup"}
-                    className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 border-2 border-green-700"
-                    data-testid="button-schedule-pickup-rates"
-                  >
-                    Schedule Free Pickup
-                  </button>
-                </div>
-              </div>
-            </div>
+            <WhyChooseKabadi className="mt-16" />
           </div>
         </section>
       </main>

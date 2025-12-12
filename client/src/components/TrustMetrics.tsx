@@ -32,20 +32,22 @@ function AnimatedCounter({ end, suffix, label, icon }: MetricProps) {
   }, [end]);
 
   const variants = [
-    { bg: "bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/40 dark:to-blue-950/40", iconBg: "bg-green-100 dark:bg-green-900/50", border: "border-l-4 border-l-green-500" },
-    { bg: "bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-950/40 dark:to-blue-950/40", iconBg: "bg-green-100 dark:bg-green-900/50", border: "border-l-4 border-l-green-600" },
-    { bg: "bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-950/40 dark:to-green-950/40", iconBg: "bg-blue-100 dark:bg-blue-900/50", border: "border-l-4 border-l-blue-500" },
-    { bg: "bg-gradient-to-br from-blue-50 to-green-50 dark:from-blue-950/40 dark:to-green-950/40", iconBg: "bg-blue-100 dark:bg-blue-900/50", border: "border-l-4 border-l-blue-600" },
+    { bg: "bg-gradient-to-br from-green-50 to-amber-50 dark:from-green-950/40 dark:to-amber-950/40", iconBg: "bg-kabadi-light", border: "border-l-4 border-l-green-500" },
+    { bg: "bg-gradient-to-br from-green-50 to-amber-50 dark:from-green-950/40 dark:to-amber-950/40", iconBg: "bg-kabadi-light", border: "border-l-4 border-l-green-600" },
+    { bg: "bg-gradient-to-br from-amber-50 to-green-50 dark:from-amber-950/40 dark:to-green-950/40", iconBg: "bg-kabadi-light", border: "border-l-4 border-l-green-500" },
+    { bg: "bg-gradient-to-br from-amber-50 to-green-50 dark:from-amber-950/40 dark:to-green-950/40", iconBg: "bg-kabadi-light", border: "border-l-4 border-l-green-600" },
   ];
   
   const variant = variants[Math.abs(label.charCodeAt(0)) % variants.length];
 
   return (
-    <Card className={`p-8 text-center hover-elevate ${variant.bg} ${variant.border} border-0`}>
+    <Card className={`group relative p-8 text-center hover:bg-gradient-to-r hover:from-green-50 hover:to-blue-50 transform transition-all duration-700 bg-white border-green-200/50 border overflow-hidden`}>
       <div className={`${variant.iconBg} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
         {icon}
       </div>
-      <div className="text-4xl font-semibold text-foreground mb-2" data-testid={`metric-${label.toLowerCase().replace(/\s+/g, '-')}`}>
+      {/* Shine animation effect */}
+      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+      <div className="text-3xl  font-semibold text-kabadi-emphasis mb-2" data-testid={`metric-${label.toLowerCase().replace(/\s+/g, '-')}`}>
         {count.toLocaleString()}
         {suffix}
       </div>
@@ -58,7 +60,7 @@ export default function TrustMetrics() {
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <AnimatedCounter
             end={10000}
             suffix="+"

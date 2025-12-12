@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CareerSection from "@/components/CareerSection";
+import WhyChooseKabadi from "@/components/WhyChooseKabadi";
 import { Card } from "@/components/ui/card";
 import { Users, Heart, TrendingUp, Award } from "lucide-react";
 
@@ -32,9 +33,10 @@ export default function Careers() {
     <div className="min-h-screen">
       <Header />
       <main>
-        <section className="py-20 bg-gradient-to-br from-primary/5 to-primary/10">
+        <section className="relative py-20 overflow-visible">
+          <div className="absolute inset-0 -top-12  bg-gradient-to-b from-green-50 via-green-50/60  -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold mb-6">Join Our Team</h1>
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6">Join Our Team</h1>
             <p className="text-xl text-muted-foreground">
               Build your career while making a positive impact on the environment
             </p>
@@ -51,7 +53,7 @@ export default function Careers() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {benefits.map((benefit) => (
-                <Card key={benefit.title} className="p-6 text-center hover-elevate">
+                <Card key={benefit.title} className="p-6 text-center bg-white border-green-200 bg-gradient-to-br from-green-50/80">
                   <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     {benefit.icon}
                   </div>
@@ -64,6 +66,13 @@ export default function Careers() {
         </section>
 
         <CareerSection />
+
+        {/* Why Choose Section */}
+        <section className="py-16 lg:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <WhyChooseKabadi />
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

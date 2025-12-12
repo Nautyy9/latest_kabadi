@@ -15,18 +15,52 @@ interface InitiativeCardProps {
 
 function InitiativeCard({ title, description, image, id }: InitiativeCardProps) {
   return (
-    <Card className="overflow-hidden hover-elevate group bg-white dark:bg-slate-800 h-96 relative">
-      <img src={image} alt={title} className="w-full h-full object-cover absolute inset-0" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-6 text-white flex flex-col justify-end h-full">
-        <h3 className="text-2xl font-bold mb-2">{title}</h3>
-        <p className="mb-4 text-sm line-clamp-2">{description}</p>
+    <Card className="overflow-hidden hover-elevate group bg-white dark:bg-slate-800 h-96 relative cursor-pointer">
+      <img src={image} alt={title} className="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-500" />
+      
+      {/* Dynamic overlay - darker by default, lighter on hover for better contrast */}
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/60 to-slate-900/20 group-hover:from-slate-900/80 group-hover:via-slate-900/40 group-hover:to-transparent transition-all duration-500" />
+      
+      {/* Animated shimmer effect on hover */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+      </div>
+      
+      <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end h-full transform group-hover:translate-y-[-8px] transition-transform duration-300">
+        {/* Glowing title with animated text shadow */}
+        <h3 className="text-2xl font-bold mb-3 text-white relative">
+          <span className="relative z-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300">
+            {title}
+          </span>
+          {/* Subtle glow behind text */}
+          <span className="absolute inset-0 text-white/20 blur-sm group-hover:text-white/40 transition-all duration-300">
+            {title}
+          </span>
+        </h3>
+        
+        {/* Enhanced description with better readability */}
+        <p className="mb-4 text-sm line-clamp-2 text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)] group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]  transition-all duration-300 leading-relaxed">
+          {description}
+        </p>
+        
+        {/* Animated button with glow effect */}
         <Link href={`/initiatives/${id}`}>
-          <Button variant="ghost" className="group-hover:translate-x-1 transition-transform p-0 h-auto text-white hover:text-white" data-testid={`button-learn-more-${title.toLowerCase().replace(/\s+/g, '-')}`}>
-            Learn More <ArrowRight className="ml-2 h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            className="group/btn group-hover:translate-x-2 transition-all duration-300 p-0 h-auto text-white hover:text-white relative overflow-hidden" 
+            data-testid={`button-learn-more-${title.toLowerCase().replace(/\s+/g, '-')}`}
+          >
+            <span className="relative z-10 flex items-center drop-shadow-md group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:font-semibold group-hover:px-4 transition-all duration-300">
+              Learn More <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+            </span>
+            {/* Button glow background */}
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded transition-all duration-300" />
           </Button>
         </Link>
       </div>
+      
+      {/* Corner accent for visual appeal */}
+      <div className="absolute top-4 right-4 w-12 h-12 bg-kabadi-primary/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm" />
     </Card>
   );
 }
@@ -54,7 +88,7 @@ export default function InitiativesSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-100 to-slate-50 dark:from-slate-900 dark:to-slate-950">
+    <section className="py-20 ">
       <div className="max-w-7xl mx-auto px-12 sm:px-12 lg:px-12">
         <div className="text-center mb-12">
           <h2 className="mb-4">Our Initiatives</h2>

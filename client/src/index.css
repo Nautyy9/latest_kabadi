@@ -236,8 +236,29 @@
 }
 
 @layer base {
+  :root {
+    --kabadi-green-primary: #00C753;    /* For subtitles/highlighting */
+    --kabadi-green-emphasis: #15803D;   /* For emphasized text */
+    --kabadi-green-light: #00C75310;    /* Light background (10% opacity) */
+    --kabadi-green-dark: #15803D20;     /* Dark background (20% opacity) */
+    
+    /* Earth tone replacements for blue */
+    --kabadi-amber: #F59E0B;             /* Warm earth tone for accents */
+    --kabadi-brown: #92400E;             /* Deep earth tone for depth */
+    --kabadi-amber-light: #FEF3C7;       /* Light amber background */
+    --kabadi-brown-light: #FED7AA;       /* Light brown background */
+    
+    /* Professional blue replacements for gray */
+    --kabadi-blue-soft: #64748B;         /* Soft blue-gray (replaces gray) */
+    --kabadi-blue-light: #F1F5F9;        /* Very light blue (replaces gray-50) */
+    --kabadi-blue-medium: #475569;       /* Medium blue-gray */
+    --kabadi-blue-dark: #334155;         /* Dark blue-gray */
+    --kabadi-blue-accent: #3B82F6;       /* Bright blue for testimonials */
+    --kabadi-blue-accent-light: #DBEAFE; /* Light blue background */
+  }
+
   * {
-    border-color: hsl(var(--border) / <alpha-value>);
+    border-color: hsl(var(--border));
   }
 
   body {
@@ -262,6 +283,114 @@
   h4, h5, h6 {
     @apply font-bold;
   }
+
+  /* Standardized Kabadi Green Classes */
+  .text-kabadi-primary { color: var(--kabadi-green-primary) !important; }
+  .text-kabadi-emphasis { color: var(--kabadi-green-emphasis) !important; }
+  .bg-kabadi-light { background-color: var(--kabadi-green-light) !important; }
+  .bg-kabadi-primary { background-color: var(--kabadi-green-primary) !important; }
+  .bg-kabadi-emphasis { background-color: var(--kabadi-green-emphasis) !important; }
+  .border-kabadi-primary { border-color: var(--kabadi-green-primary) !important; }
+  .border-kabadi-emphasis { border-color: var(--kabadi-green-emphasis) !important; }
+  
+  /* Earth Tone Classes (Blue Replacements) */
+  .text-kabadi-amber { color: var(--kabadi-amber) !important; }
+  .text-kabadi-brown { color: var(--kabadi-brown) !important; }
+  .bg-kabadi-amber { background-color: var(--kabadi-amber) !important; }
+  .bg-kabadi-brown { background-color: var(--kabadi-brown) !important; }
+  .bg-kabadi-amber-light { background-color: var(--kabadi-amber-light) !important; }
+  .bg-kabadi-brown-light { background-color: var(--kabadi-brown-light) !important; }
+  .border-kabadi-amber { border-color: var(--kabadi-amber) !important; }
+  .border-kabadi-brown { border-color: var(--kabadi-brown) !important; }
+  
+  /* Professional Blue Classes (Gray Replacements) */
+  .text-kabadi-blue-soft { color: var(--kabadi-blue-soft) !important; }
+  .text-kabadi-blue-medium { color: var(--kabadi-blue-medium) !important; }
+  .text-kabadi-blue-dark { color: var(--kabadi-blue-dark) !important; }
+  .text-kabadi-blue-accent { color: var(--kabadi-blue-accent) !important; }
+  .bg-kabadi-blue-light { background-color: var(--kabadi-blue-light) !important; }
+  .bg-kabadi-blue-accent { background-color: var(--kabadi-blue-accent) !important; }
+  .bg-kabadi-blue-accent-light { background-color: var(--kabadi-blue-accent-light) !important; }
+  .border-kabadi-blue-soft { border-color: var(--kabadi-blue-soft) !important; }
+  .border-kabadi-blue-accent { border-color: var(--kabadi-blue-accent) !important; }
+
+  /* Custom 404 Page Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+  
+  @keyframes float-delayed {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(-3deg); }
+  }
+  
+  @keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+  }
+  
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(1.05); }
+  }
+  
+  @keyframes pulse-slower {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.05; transform: scale(1.1); }
+  }
+  
+  @keyframes fade-in {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fade-in-delayed {
+    0% { opacity: 0; transform: translateY(20px); }
+    40% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fade-in-delayed-2 {
+    0% { opacity: 0; transform: translateY(20px); }
+    60% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fade-in-delayed-3 {
+    0% { opacity: 0; transform: translateY(20px); }
+    80% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slide-up {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes bounce-left {
+    0%, 100% { transform: translateX(0px); }
+    50% { transform: translateX(-3px); }
+  }
+  
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; }
+  .animate-bounce-gentle { animation: bounce-gentle 3s ease-in-out infinite; }
+  .animate-wiggle { animation: wiggle 2s ease-in-out infinite; }
+  .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+  .animate-pulse-slower { animation: pulse-slower 6s ease-in-out infinite; }
+  .animate-fade-in { animation: fade-in 1s ease-out forwards; }
+  .animate-fade-in-delayed { animation: fade-in-delayed 1.5s ease-out forwards; }
+  .animate-fade-in-delayed-2 { animation: fade-in-delayed-2 2s ease-out forwards; }
+  .animate-fade-in-delayed-3 { animation: fade-in-delayed-3 2.5s ease-out forwards; }
+  .animate-slide-up { animation: slide-up 1.2s ease-out forwards; }
+  .animate-bounce-left { animation: bounce-left 1s ease-in-out infinite; }
 }
 
 /**
@@ -354,16 +483,12 @@
 
   .hover-elevate:hover:not(.no-default-hover-elevate)::after,
   .active-elevate:active:not(.no-default-active-elevate)::after {
-    background-color: rgba(34, 197, 94, 0.1);
+    background-color: var(--elevate-1);
   }
 
   .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
   .active-elevate-2:active:not(.no-default-active-elevate)::after {
-    background-color: rgba(34, 197, 94, 0.15);
-  }
-
-  button:hover:not([class*="bg-green"]):not([class*="bg-primary"]) {
-    @apply bg-green-50 dark:bg-green-950/30 border-green-600 dark:border-green-400;
+    background-color: var(--elevate-2);
   }
 
   /* If there's a 1px border, adjust the inset so that it covers that parent's border */

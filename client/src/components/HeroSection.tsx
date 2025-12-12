@@ -14,7 +14,10 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden">
+    
+    <section className="relative overflow-visible">
+      {/* Extended gradient background that covers header area but stays within hero section */}
+      <div className="absolute inset-x-0 -top-12 bottom-0 bg-gradient-to-b from-green-50 via-green-50/30 to-transparent -z-10 pointer-events-none"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
@@ -29,14 +32,14 @@ export default function HeroSection() {
               <Button size="lg" onClick={scrollToPickup} data-testid="button-schedule-pickup">
                 Schedule Free Pickup
               </Button>
-              <Button size="lg" variant="outline" onClick={scrollToPricing} data-testid="button-view-pricing">
+              <Button size="lg" variant="outline" className=""  onClick={scrollToPricing} data-testid="button-view-pricing">
                 View Pricing
               </Button>
             </div>
             <div className="flex flex-wrap gap-6 pt-4">
               <div className="flex items-center gap-3">
-                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg border border-blue-300 dark:border-blue-700">
-                  <Leaf className="h-6 w-6 text-blue-600 dark:text-blue-400 stroke-[1.5]" />
+                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                  <Leaf className="text-primary h-6 w-6  stroke-[1.5]" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Eco-Friendly</p>
@@ -44,8 +47,8 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg border border-blue-300 dark:border-blue-700">
-                  <TrendingUp className="h-6 w-6 text-blue-600 dark:text-blue-400 stroke-[1.5]" />
+                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                  <TrendingUp className="h-6 w-6 text-primary stroke-[1.5]" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Best Rates</p>
@@ -53,8 +56,8 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg border border-blue-300 dark:border-blue-700">
-                  <Clock className="h-6 w-6 text-blue-600 dark:text-blue-400 stroke-[1.5]" />
+                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                  <Clock className="h-6 w-6 text-primary stroke-[1.5]" />
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">Quick Pickup</p>

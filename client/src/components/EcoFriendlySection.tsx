@@ -42,10 +42,10 @@ export default function EcoFriendlySection() {
             </p>
             <div className="grid gap-4">
               {benefits.map((benefit) => (
-                <Card key={benefit.title} className="p-6 hover-elevate border-l-2 border-l-blue-500">
+                <Card key={benefit.title} className="p-6 bg-white border-l-2 border-l-green-500">
                   <div className="flex items-start gap-4">
-                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg flex-shrink-0">
-                      <div className="text-blue-600 dark:text-blue-400">
+                    <div className=" p-3 rounded-lg flex-shrink-0">
+                      <div className="text-kabadi-primary">
                         {benefit.icon}
                       </div>
                     </div>
@@ -68,9 +68,11 @@ export default function EcoFriendlySection() {
         </div>
 
         <div className="mt-16">
-          <Card className="overflow-hidden">
-            <div className="grid lg:grid-cols-2 gap-0">
-              <div className="p-8 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-primary/5 to-primary/10">
+            <Card className=" group relative bg-gradient-to-b lg:bg-gradient-to-r from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200    hover:border-green-200/50  overflow-hidden ">
+                {/* <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div> */}
+                
+            <div className="grid lg:grid-cols-2 gap-0 border rounded-3xl border-green-200/50">
+              <div className="p-8 lg:p-12 flex flex-col justify-center   ">
                 <h3 className="text-3xl font-bold mb-4">The Change We're Creating</h3>
                 <p className="text-lg text-muted-foreground mb-6">
                   Our impact extends beyond waste collection. We're transforming neighborhoods, creating green jobs, and inspiring environmental consciousness across communities.

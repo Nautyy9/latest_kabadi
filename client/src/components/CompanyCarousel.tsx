@@ -18,7 +18,7 @@ export default function CompanyCarousel() {
   return (
     <section className="py-16 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12 pb-6 border-b-2 border-dashed border-gray-300 dark:border-gray-600">
+        <h2 className="text-3xl font-bold text-center mb-12 pb-6 border-b-2 border-dashed border-slate-300 dark:border-slate-600">
           Over 75,000 Companies Use theKabadi to be More Productive
         </h2>
         <div className="relative overflow-hidden">

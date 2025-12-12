@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import WhyChooseKabadi from "@/components/WhyChooseKabadi";
 import vehicleImage from "@assets/generated_images/Vehicle_scrapping_service_facility_7aed18af.png";
 import zeroWasteImage from "@assets/generated_images/Zero_waste_eco-friendly_community_ea9c04d6.png";
 import paperImage from "@assets/generated_images/Professional_paper_shredding_service_2b5363e9.png";
@@ -66,9 +67,10 @@ export default function Services() {
     <div className="min-h-screen">
       <Header />
       <main>
-        <section className="py-20 bg-white dark:bg-slate-950 border-b-2">
+        <section className="relative py-20 overflow-visible">
+          <div className="absolute inset-0 -top-12 bg-gradient-to-b from-green-50 via-green-50/60 -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl font-bold mb-6">Our Services</h1>
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6">Our Services</h1>
             <p className="text-xl text-muted-foreground">
               Comprehensive eco-friendly solutions for all your scrap and waste management needs
             </p>
@@ -100,7 +102,7 @@ export default function Services() {
                   <p className="text-base lg:text-lg text-muted-foreground mb-6">
                     {service.description}
                   </p>
-                  <Card className="p-4 sm:p-6 mb-6 bg-green-50/50 dark:bg-green-950/20 border-l-4 border-l-green-600">
+                  <Card className="p-4 sm:p-6 mb-6 bg-gradient-to-r from-green-50 via-green-50/50 to-white dark:bg-green-950/20 border-l-4 border-l-green-600">
                     <h3 className="font-semibold text-base lg:text-lg mb-4 text-foreground">Key Features:</h3>
                     <ul className="space-y-2">
                       {service.features.map((feature) => (
@@ -125,7 +127,7 @@ export default function Services() {
           </div>
         </section>
 
-        <section className="py-16 lg:py-20 bg-white dark:bg-slate-950">
+        {/* <section className="py-16 lg:py-20 bg-white dark:bg-slate-950">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 lg:mb-6">Ready to Get Started?</h2>
             <p className="text-base lg:text-xl text-muted-foreground mb-6 lg:mb-8">
@@ -146,9 +148,15 @@ export default function Services() {
               </Button>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <ContactSection />
+        
+        {/* Why Choose Section */}
+        <section className="py-16 lg:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <WhyChooseKabadi />
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

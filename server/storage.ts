@@ -17,6 +17,10 @@ export interface IStorage {
   getCareerApplications(): Promise<CareerApplication[]>;
 }
 
+import { db } from './db/drizzle';
+import { pickupRequests, contactMessages, careerApplications } from '@shared/schema';
+import { desc } from 'drizzle-orm';
+
 export class MemStorage implements IStorage {
   private pickupRequests: Map<string, PickupRequest>;
   private contactMessages: Map<string, ContactMessage>;
@@ -79,4 +83,64 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new (class DbStorage implements IStorage {
+  async createPickupRequest(insertRequest: InsertPickupRequest): Promise<PickupRequest> {
+    const [row] = await db
+      .insert(pickupRequests)
+      .values({
+        name: insertRequest.name,
+        email: insertRequest.email,
+        phone: insertRequest.phone ?? null,
+        address: insertRequest.address,
+        scrapTypes: insertRequest.scrapTypes,
+        estimatedQuantity: insertRequest.estimatedQuantity ?? null,
+        additionalNotes: insertRequest.additionalNotes ?? null,
+      })
+      .returning();
+    return row as PickupRequest;
+  }
+
+  async getPickupRequests(): Promise<PickupRequest[]> {
+    const rows = await db.select().from(pickupRequests).orderBy(desc(pickupRequests.createdAt));
+    return rows as PickupRequest[];
+  }
+
+  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const [row] = await db
+      .insert(contactMessages)
+      .values({
+        name: insertMessage.name,
+        email: insertMessage.email,
+        phone: insertMessage.phone,
+        subject: insertMessage.subject,
+        message: insertMessage.message,
+      })
+      .returning();
+    return row as ContactMessage;
+  }
+
+  async getContactMessages(): Promise<ContactMessage[]> {
+    const rows = await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
+    return rows as ContactMessage[];
+  }
+
+  async createCareerApplication(insertApplication: InsertCareerApplication): Promise<CareerApplication> {
+    const [row] = await db
+      .insert(careerApplications)
+      .values({
+        name: insertApplication.name,
+        email: insertApplication.email,
+        phone: insertApplication.phone,
+        position: insertApplication.position,
+        coverLetter: insertApplication.coverLetter ?? null,
+        cvFileName: insertApplication.cvFileName ?? null,
+      })
+      .returning();
+    return row as CareerApplication;
+  }
+
+  async getCareerApplications(): Promise<CareerApplication[]> {
+    const rows = await db.select().from(careerApplications).orderBy(desc(careerApplications.createdAt));
+    return rows as CareerApplication[];
+  }
+})();

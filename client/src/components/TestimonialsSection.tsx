@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import testimonial1 from "@assets/generated_images/Customer_testimonial_portrait_male_1abbf207.png";
 import testimonial2 from "@assets/generated_images/Customer_testimonial_portrait_female_090bd0b0.png";
 import testimonial3 from "@assets/generated_images/Senior_customer_testimonial_portrait_7e947acc.png";
+import { cn } from "@/lib/utils";
 
 interface TestimonialCardProps {
   name: string;
@@ -17,9 +18,10 @@ function TestimonialCard({ name, location, rating, text, image }: TestimonialCar
   return (
     <Card className="p-6 hover-elevate">
       <div className="flex gap-1 mb-4">
-        {[...Array(rating)].map((_, i) => (
-          <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className={cn("h-5 w-5 stroke-amber-500  text-amber-500", i<rating ? "fill-amber-500" : "fill-white")} />
         ))}
+
       </div>
       <p className="text-muted-foreground italic mb-6">"{text}"</p>
       <div className="flex items-center gap-3">
@@ -55,7 +57,7 @@ export default function TestimonialsSection() {
     {
       name: "Mohan Singh",
       location: "Bangalore",
-      rating: 5,
+      rating: 4,
       text: "Been using their service for months. The rates are the best in the market and the pickup is always on time. Great initiative for our environment!",
       image: testimonial3,
     },

@@ -11,18 +11,23 @@ interface ServiceCardProps {
 
 function ServiceCard({ icon, title, description }: ServiceCardProps) {
   return (
-    <Card className="p-8 hover-elevate border-l-4 border-l-blue-500 bg-white dark:bg-slate-800">
-      <div className="bg-blue-100 dark:bg-blue-900/30 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-blue-300 dark:border-blue-700">
-        <div className="text-blue-600 dark:text-blue-400">
+    <Card className="p-8 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2 border-l-4  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                <div className="absolute inset-0 -translate-x-full group-hover/btn:scale-110 group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                  <div className="bg-kabadi-light w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-green-300 dark:border-green-600">
+        <div className="text-kabadi-primary">
           {icon}
         </div>
       </div>
       <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
       <p className="text-muted-foreground mb-4 text-sm">{description}</p>
       <Link href="/services">
-        <Button variant="ghost" data-testid={`button-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+        <Button 
+          variant="ghost" 
+          className="group/btn group-hover:bg-primary group-hover:text-white transition-all duration-300" 
+          data-testid={`button-explore-${title.toLowerCase().replace(/\s+/g, '-')}`}
+        >
           Explore Service
-          <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </Button>
@@ -56,7 +61,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section className="py-20 bg-gray-100 dark:bg-slate-900">
+    <section className="py-20   dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-12 sm:px-12 lg:px-12">
         <div className="text-center mb-16">
           <h2 className="mb-4">Our Services</h2>

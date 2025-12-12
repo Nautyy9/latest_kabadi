@@ -3,8 +3,16 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertPickupRequestSchema, insertContactMessageSchema, insertCareerApplicationSchema } from "@shared/schema";
 import { z } from "zod";
+import { pingDb } from "./db/drizzle";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Healthcheck
+  app.get("/api/health", async (_req, res) => {
+    const ok = await pingDb();
+    if (!ok) return res.status(503).json({ ok: false });
+    res.json({ ok: true });
+  });
+
   // Pickup Request API
   app.post("/api/pickup-requests", async (req, res) => {
     try {

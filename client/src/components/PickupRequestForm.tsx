@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function PickupRequestForm() {
   const { toast } = useToast();
@@ -37,26 +38,45 @@ export default function PickupRequestForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Pickup request submitted:", formData);
-    toast({
-      title: "Request Submitted!",
-      description: "We'll contact you within 24 hours to schedule your pickup.",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      scrapTypes: [],
-      estimatedQuantity: "",
-      additionalNotes: "",
-    });
+    try {
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        address: formData.address,
+        scrapTypes: formData.scrapTypes,
+        estimatedQuantity: formData.estimatedQuantity || null,
+        additionalNotes: formData.additionalNotes || null,
+      };
+      const res = await apiRequest('POST', '/api/pickup-requests', payload);
+      await res.json();
+      toast({
+        title: 'Request Submitted!',
+        description: "We'll contact you within 24 hours to schedule your pickup.",
+      });
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        scrapTypes: [],
+        estimatedQuantity: '',
+        additionalNotes: '',
+      });
+    } catch (err: any) {
+      toast({
+        title: 'Submission Failed',
+        description: err?.message || 'Please try again later',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
-    <section id="request-pickup" className="py-20 bg-muted/30">
+    <section id="request-pickup" className="related py-20 bg-muted/30">
+      <div className="absolute inset-0  bg-gradient-to-b from-green-100"></div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="mb-4">Request a Pickup</h2>
