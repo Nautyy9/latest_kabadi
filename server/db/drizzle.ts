@@ -2,22 +2,23 @@ import 'dotenv/config';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is required to initialize the database connection');
+// Lazily initialize DB so the app can boot without DATABASE_URL (Render envs, local dev)
+const dbUrl = process.env.DATABASE_URL;
+let client: ReturnType<typeof postgres> | null = null;
+
+if (dbUrl) {
+  client = postgres(dbUrl, {
+    // Supabase works well with postgres-js; disable prepared statements to avoid some env issues
+    prepare: false,
+    max: 10,
+  });
 }
 
-// Create a singleton postgres client and drizzle instance
-const client = postgres(process.env.DATABASE_URL, {
-  // Supabase works well with postgres-js; disable prepared statements to avoid some env issues
-  prepare: false,
-  max: 10,
-});
-
-export const db = drizzle(client);
+export const db = client ? drizzle(client) : undefined as unknown as ReturnType<typeof drizzle>;
 
 export async function pingDb(): Promise<boolean> {
   try {
-    // simple ping
+    if (!client) return false;
     await client`select 1`;
     return true;
   } catch {
@@ -26,5 +27,7 @@ export async function pingDb(): Promise<boolean> {
 }
 
 export async function closeDb() {
-  await client.end({ timeout: 5 });
+  if (client) {
+    await client.end({ timeout: 5 });
+  }
 }

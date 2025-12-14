@@ -17,9 +17,14 @@ export interface IStorage {
   getCareerApplications(): Promise<CareerApplication[]>;
 }
 
-import { db } from './db/drizzle';
 import { pickupRequests, contactMessages, careerApplications } from '@shared/schema';
 import { desc } from 'drizzle-orm';
+
+async function getDb() {
+  const mod = await import('./db/drizzle');
+  // if db is not configured, return undefined; callers handle gracefully
+  return (mod as any).db as any | undefined;
+}
 
 export class MemStorage implements IStorage {
   private pickupRequests: Map<string, PickupRequest>;
