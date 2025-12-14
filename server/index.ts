@@ -106,8 +106,15 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
+    // Log full error with stack for server diagnostics
+    if (err) {
+      const trace = err.stack || err.toString();
+      log(`Unhandled error (${status}): ${message} :: ${trace}`, 'error');
+      console.error('[error]', trace);
+    }
+
     res.status(status).json({ message });
-    throw err;
+    // Do not re-throw here; keep the process alive and let the request finish.
   });
 
   // importantly only setup vite in development and after
@@ -119,13 +126,14 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Fail fast in production if DB is not reachable
+  // In production, prefer DB but do not exit if unreachable; fall back to MemStorage
   if (app.get("env") === "production") {
     const { pingDb } = await import('./db/drizzle');
     const ok = await pingDb();
     if (!ok) {
-      log('Database is not reachable. Exiting.', 'startup');
-      process.exit(1);
+      log('Database is not reachable. Continuing with in-memory storage fallback.', 'startup');
+    } else {
+      log('Database reachable. Using DB-backed storage.', 'startup');
     }
   }
 

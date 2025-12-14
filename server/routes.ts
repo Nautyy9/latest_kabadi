@@ -69,6 +69,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid request data", details: error.errors });
       } else {
+        console.error('[api] create pickup failed:', (error as any)?.stack || error);
         res.status(500).json({ error: "Failed to create pickup request" });
       }
     }
@@ -79,6 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const requests = await storage.getPickupRequests();
       res.json(requests);
     } catch (error) {
+      console.error('[api] list pickups failed:', (error as any)?.stack || error);
       res.status(500).json({ error: "Failed to fetch pickup requests" });
     }
   });
@@ -116,6 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid message data", details: error.errors });
       } else {
+        console.error('[api] create contact failed:', (error as any)?.stack || error);
         res.status(500).json({ error: "Failed to send message" });
       }
     }
@@ -126,6 +129,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const messages = await storage.getContactMessages();
       res.json(messages);
     } catch (error) {
+      console.error('[api] list contacts failed:', (error as any)?.stack || error);
       res.status(500).json({ error: "Failed to fetch messages" });
     }
   });
@@ -156,6 +160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid application data", details: error.errors });
       } else {
+        console.error('[api] create application failed:', (error as any)?.stack || error);
         res.status(500).json({ error: "Failed to submit application" });
       }
     }
@@ -166,6 +171,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const applications = await storage.getCareerApplications();
       res.json(applications);
     } catch (error) {
+      console.error('[api] list applications failed:', (error as any)?.stack || error);
       res.status(500).json({ error: "Failed to fetch applications" });
     }
   });

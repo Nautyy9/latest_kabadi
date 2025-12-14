@@ -94,6 +94,8 @@ const memStore = new MemStorage();
 
 class DbStorage implements IStorage {
   async createPickupRequest(insertRequest: InsertPickupRequest): Promise<PickupRequest> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const [row] = await db
       .insert(pickupRequests)
       .values({
@@ -110,11 +112,15 @@ class DbStorage implements IStorage {
   }
 
   async getPickupRequests(): Promise<PickupRequest[]> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const rows = await db.select().from(pickupRequests).orderBy(desc(pickupRequests.createdAt));
     return rows as PickupRequest[];
   }
 
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const [row] = await db
       .insert(contactMessages)
       .values({
@@ -129,11 +135,15 @@ class DbStorage implements IStorage {
   }
 
   async getContactMessages(): Promise<ContactMessage[]> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const rows = await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
     return rows as ContactMessage[];
   }
 
   async createCareerApplication(insertApplication: InsertCareerApplication): Promise<CareerApplication> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const [row] = await db
       .insert(careerApplications)
       .values({
@@ -149,9 +159,72 @@ class DbStorage implements IStorage {
   }
 
   async getCareerApplications(): Promise<CareerApplication[]> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
     const rows = await db.select().from(careerApplications).orderBy(desc(careerApplications.createdAt));
     return rows as CareerApplication[];
   }
 }
 
-export const storage: IStorage = useMemory ? new MemStorage() : new DbStorage();
+class HybridStorage implements IStorage {
+  private dbStore = new DbStorage();
+  private memStore = memStore;
+  private preferDb = !!process.env.DATABASE_URL;
+
+  private async withFallback<T>(dbOp: () => Promise<T>, memOp: () => Promise<T>): Promise<T> {
+    if (this.preferDb) {
+      try {
+        return await dbOp();
+      } catch (err: any) {
+        console.warn('[storage] DB operation failed; falling back to memory:', err?.message || err);
+        this.preferDb = false;
+        return memOp();
+      }
+    }
+    return memOp();
+  }
+
+  createPickupRequest(req: InsertPickupRequest) {
+    return this.withFallback(
+      () => this.dbStore.createPickupRequest(req),
+      () => this.memStore.createPickupRequest(req),
+    );
+  }
+
+  getPickupRequests() {
+    return this.withFallback(
+      () => this.dbStore.getPickupRequests(),
+      () => this.memStore.getPickupRequests(),
+    );
+  }
+
+  createContactMessage(msg: InsertContactMessage) {
+    return this.withFallback(
+      () => this.dbStore.createContactMessage(msg),
+      () => this.memStore.createContactMessage(msg),
+    );
+  }
+
+  getContactMessages() {
+    return this.withFallback(
+      () => this.dbStore.getContactMessages(),
+      () => this.memStore.getContactMessages(),
+    );
+  }
+
+  createCareerApplication(app: InsertCareerApplication) {
+    return this.withFallback(
+      () => this.dbStore.createCareerApplication(app),
+      () => this.memStore.createCareerApplication(app),
+    );
+  }
+
+  getCareerApplications() {
+    return this.withFallback(
+      () => this.dbStore.getCareerApplications(),
+      () => this.memStore.getCareerApplications(),
+    );
+  }
+}
+
+export const storage: IStorage = new HybridStorage();
