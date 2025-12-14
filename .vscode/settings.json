@@ -1,0 +1,10 @@
+{
+  "mcp.servers": {
+    "render": {
+      "url": "https://mcp.render.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${env:RENDER_MCP_TOKEN}"
+      }
+    }
+  }
+}
