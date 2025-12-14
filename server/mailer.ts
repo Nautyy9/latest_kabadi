@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
-
+import dotenv from "dotenv"
+dotenv.config()
 const {
   SMTP_HOST,
   SMTP_PORT,

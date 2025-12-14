@@ -13,3 +13,4 @@ services:
       # NOTE: Render provides PORT automatically; do not hardcode it
       # Add your runtime env vars in the Render dashboard or use sync from repo
       # e.g., DATABASE_URL, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_NOTIFY_TO, etc.
+ 
