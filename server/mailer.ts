@@ -43,7 +43,7 @@ export async function sendContactNotification(contact: {
     console.warn('[mailer] No CONTACT_NOTIFY_TO configured; skipping');
     return { skipped: true } as const;
   }
-  const subject = `[${APP_NAME}] New contact message: ${contact.subject}`;
+  const subject = `[${APP_NAME}] New contact message: ${sanitizeSubject(contact.subject)}`;
 
   const html = `
     <div style="font-family: Arial, sans-serif;">
@@ -138,6 +138,11 @@ export async function sendCareerApplicationNotification(app: {
 
   const info = await transporter.sendMail({ from: SMTP_USER, to, subject, text, html });
   return { messageId: info.messageId };
+}
+
+function sanitizeSubject(input: string) {
+  // Prevent header injection and overly long subjects
+  return input.replace(/[\r\n]/g, ' ').slice(0, 200);
 }
 
 function escapeHtml(input: string) {
