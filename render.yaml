@@ -3,7 +3,7 @@ services:
     name: kabadi
     env: node
     plan: free
-    buildCommand: npm ci --include=dev && npm run build
+    buildCommand: npm install --production=false && npm run build
     startCommand: npm start
     autoDeploy: true
     healthCheckPath: /api/live
