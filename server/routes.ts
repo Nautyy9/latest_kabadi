@@ -47,6 +47,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertPickupRequestSchema.parse(req.body);
       const request = await storage.createPickupRequest(validatedData);
+
+      import('./mailer')
+        .then(({ sendPickupRequestNotification }) => sendPickupRequestNotification({
+          name: request.name,
+          email: request.email,
+          phone: request.phone,
+          address: request.address,
+          scrapTypes: request.scrapTypes,
+          estimatedQuantity: request.estimatedQuantity,
+          additionalNotes: request.additionalNotes,
+        }))
+        .catch((err) => console.warn('[mailer] failed to send pickup notification', err?.message || err));
+
       res.status(201).json(request);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -114,6 +127,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertCareerApplicationSchema.parse(req.body);
       const application = await storage.createCareerApplication(validatedData);
+
+      import('./mailer')
+        .then(({ sendCareerApplicationNotification }) => sendCareerApplicationNotification({
+          name: application.name,
+          email: application.email,
+          phone: application.phone,
+          position: application.position,
+          coverLetter: application.coverLetter,
+          cvFileName: application.cvFileName,
+        }))
+        .catch((err) => console.warn('[mailer] failed to send career application notification', err?.message || err));
+
       res.status(201).json(application);
     } catch (error) {
       if (error instanceof z.ZodError) {
