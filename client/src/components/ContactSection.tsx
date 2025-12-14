@@ -17,6 +17,7 @@ export default function ContactSection() {
     phone: "",
     subject: "",
     message: "",
+    botField: "",
   });
   const [errors, setErrors] = useState({
     name: false,
@@ -83,6 +84,7 @@ export default function ContactSection() {
         phone: formData.phone,
         subject: formData.subject,
         message: formData.message,
+        botField: formData.botField,
       };
       const res = await apiRequest('POST', '/api/contact-messages', payload);
       await res.json();
@@ -114,12 +116,9 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-slate-950">
+    <section className="bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-xl text-muted-foreground">
-            Ready to make an impact? Whether you need our services or want to partner with us, we'd love to hear from you.
-          </p>
         </div>
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           <div className="lg:col-span-2">
@@ -189,6 +188,8 @@ export default function ContactSection() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {/* Honey-pot field to catch bots */}
+                  <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
                   {/* Name Field */}
                   <div className="group/field">
                     <div className="relative">

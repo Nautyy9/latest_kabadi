@@ -48,6 +48,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertPickupRequestSchema.parse(req.body);
       const request = await storage.createPickupRequest(validatedData);
 
+      if ((validatedData as any).botField) {
+        return res.status(201).json(request);
+      }
+
       import('./mailer')
         .then(({ sendPickupRequestNotification }) => sendPickupRequestNotification({
           name: request.name,
@@ -84,6 +88,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(validatedData);
+
+      if ((validatedData as any).botField) {
+        return res.status(201).json(message);
+      }
 
       // Fire-and-forget email notification; do not block response
       import('./mailer')
@@ -127,6 +135,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertCareerApplicationSchema.parse(req.body);
       const application = await storage.createCareerApplication(validatedData);
+
+      if ((validatedData as any).botField) {
+        return res.status(201).json(application);
+      }
 
       import('./mailer')
         .then(({ sendCareerApplicationNotification }) => sendCareerApplicationNotification({

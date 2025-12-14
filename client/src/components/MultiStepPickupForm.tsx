@@ -38,6 +38,7 @@ export default function MultiStepPickupForm() {
     estimatedQuantity: "",
     address: "",
     additionalNotes: "",
+    botField: "",
   });
   const [errors, setErrors] = useState({
     name: false,
@@ -107,6 +108,7 @@ export default function MultiStepPickupForm() {
         estimatedQuantity: "",
         address: "",
         additionalNotes: "",
+        botField: "",
       });
       setErrors({
         name: false,
@@ -160,6 +162,7 @@ export default function MultiStepPickupForm() {
       scrapTypes: scrapTypeNames,
       estimatedQuantity: formData.estimatedQuantity || null,
       additionalNotes: formData.additionalNotes || null,
+      botField: formData.botField,
     });
   };
 
@@ -178,6 +181,8 @@ export default function MultiStepPickupForm() {
         <div className="absolute bottom-12 left-6 w-1 h-1 bg-blue-400/40 rounded-full animate-ping"></div>
         <div className="absolute top-20 left-12 w-1.5 h-1.5 bg-green-300/20 rounded-full animate-bounce"></div>
         
+       {/* Honey-pot field to catch bots */}
+       <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold  mb-4">
             Request a Pickup 🚛

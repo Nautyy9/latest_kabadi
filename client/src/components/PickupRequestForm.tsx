@@ -18,6 +18,7 @@ export default function PickupRequestForm() {
     scrapTypes: [] as string[],
     estimatedQuantity: "",
     additionalNotes: "",
+    botField: "",
   });
 
   const scrapTypes = [
@@ -49,6 +50,7 @@ export default function PickupRequestForm() {
         scrapTypes: formData.scrapTypes,
         estimatedQuantity: formData.estimatedQuantity || null,
         additionalNotes: formData.additionalNotes || null,
+        botField: formData.botField,
       };
       const res = await apiRequest('POST', '/api/pickup-requests', payload);
       await res.json();
@@ -86,6 +88,8 @@ export default function PickupRequestForm() {
         </div>
         <Card className="p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Honey-pot field to catch bots */}
+            <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="name">Full Name *</Label>

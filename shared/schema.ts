@@ -44,6 +44,7 @@ export const insertPickupRequestSchema = z.object({
   scrapTypes: z.array(z.string().trim().min(1)).min(1).max(20),
   estimatedQuantity: z.string().trim().min(1).max(50).optional().nullable(),
   additionalNotes: z.string().trim().max(1000).optional().nullable(),
+  botField: z.string().max(0).optional(),
 });
 
 export const insertContactMessageSchema = z.object({
@@ -52,6 +53,7 @@ export const insertContactMessageSchema = z.object({
   phone: z.string().trim().regex(/^[+\d\s()-]{7,20}$/),
   subject: z.string().trim().min(2).max(150),
   message: z.string().trim().min(1).max(2000),
+  botField: z.string().max(0).optional(),
 });
 
 export const insertCareerApplicationSchema = z.object({
@@ -61,6 +63,7 @@ export const insertCareerApplicationSchema = z.object({
   position: z.string().trim().min(2).max(100),
   coverLetter: z.string().trim().max(5000).optional().nullable(),
   cvFileName: z.string().trim().max(255).optional().nullable(),
+  botField: z.string().max(0).optional(),
 });
 
 export type InsertPickupRequest = z.infer<typeof insertPickupRequestSchema>;

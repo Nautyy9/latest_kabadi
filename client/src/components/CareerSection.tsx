@@ -17,6 +17,7 @@ export default function CareerSection() {
     phone: "",
     position: "",
     coverLetter: "",
+    botField: "",
   });
   const [fileName, setFileName] = useState("");
   const [errors, setErrors] = useState({
@@ -85,6 +86,7 @@ export default function CareerSection() {
         position: formData.position,
         coverLetter: formData.coverLetter || null,
         cvFileName: fileName || null,
+        botField: formData.botField,
       };
       const res = await fetch('/api/career-applications', {
         method: 'POST',
@@ -203,6 +205,8 @@ export default function CareerSection() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  {/* Honey-pot field to catch bots */}
+                  <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
                   {/* Name Field */}
                   <div className="group/field">
                     <div className="relative">
