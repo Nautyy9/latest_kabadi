@@ -158,6 +158,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Dev-only: trigger sample notifications for testing
+  if (app.get('env') !== 'production') {
+    app.post('/api/test-notifications', async (_req, res) => {
+      try {
+        const contact = await storage.createContactMessage({
+          name: 'Test User',
+          email: 'test@example.com',
+          phone: '+1 555 0100',
+          subject: 'Test Contact',
+          message: 'This is a test contact message from theKabadi test endpoint.',
+        });
+
+        const pickup = await storage.createPickupRequest({
+          name: 'Pickup Tester',
+          email: 'pickup@test.com',
+          phone: '+1 555 0101',
+          address: '123 Green Street, Eco City',
+          scrapTypes: ['Paper', 'Plastic'],
+          estimatedQuantity: '25 kg',
+          additionalNotes: 'Leave at gate.',
+        });
+
+        const career = await storage.createCareerApplication({
+          name: 'Applicant Test',
+          email: 'applicant@test.com',
+          phone: '+1 555 0102',
+          position: 'Recycling Specialist',
+          coverLetter: 'I care deeply about sustainability and process.',
+          cvFileName: 'resume.pdf',
+        });
+
+        import('./mailer')
+          .then(async ({ sendContactNotification, sendPickupRequestNotification, sendCareerApplicationNotification }) => {
+            await Promise.allSettled([
+              sendContactNotification(contact),
+              sendPickupRequestNotification(pickup),
+              sendCareerApplicationNotification({
+                name: career.name,
+                email: career.email,
+                phone: career.phone,
+                position: career.position,
+                coverLetter: career.coverLetter,
+                cvFileName: career.cvFileName,
+              }),
+            ]);
+          })
+          .catch((err) => console.warn('[mailer] failed to trigger test notifications', err?.message || err));
+
+        res.json({ ok: true, message: 'Test notifications enqueued (check mail inbox and server logs).' });
+      } catch (err: any) {
+        res.status(500).json({ ok: false, error: err?.message || 'Failed to enqueue test notifications' });
+      }
+    });
+  }
+
   const httpServer = createServer(app);
   return httpServer;
 }
