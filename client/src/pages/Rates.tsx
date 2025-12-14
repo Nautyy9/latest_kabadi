@@ -120,7 +120,7 @@ export default function Rates() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Search and Filter Section */}
             <div className="mb-10">

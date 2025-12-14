@@ -13,10 +13,13 @@ if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
   // We will guard at send-time.
 }
 
+const resolvedPort = Number(SMTP_PORT || 587);
+const resolvedSecure = resolvedPort === 465; // implicit TLS if using 465
+
 export const transporter = nodemailer.createTransport({
   host: SMTP_HOST,
-  port: Number(SMTP_PORT || 587),
-  secure: false, // STARTTLS on 587
+  port: resolvedPort,
+  secure: resolvedSecure, // STARTTLS on 587 (secure=false), implicit TLS on 465 (secure=true)
   auth: SMTP_USER && SMTP_PASS ? { user: SMTP_USER, pass: SMTP_PASS } : undefined,
 });
 
