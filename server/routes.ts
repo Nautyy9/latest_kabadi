@@ -4,13 +4,42 @@ import { storage } from "./storage";
 import { insertPickupRequestSchema, insertContactMessageSchema, insertCareerApplicationSchema } from "@shared/schema";
 import { z } from "zod";
 import { pingDb } from "./db/drizzle";
+import { register as metricsRegister, httpRequestDuration } from './metrics';
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Healthcheck
+  // Metrics endpoint (Prometheus)
+  app.get('/metrics', async (_req, res) => {
+    res.set('Content-Type', metricsRegister.contentType);
+    res.end(await metricsRegister.metrics());
+  });
+
+  // Liveness (process up)
+  app.get('/api/live', (_req, res) => {
+    res.json({ ok: true });
+  });
+
+  // Readiness (DB available)
+  app.get('/api/ready', async (_req, res) => {
+    const ok = await pingDb();
+    if (!ok) return res.status(503).json({ ok: false });
+    res.json({ ok: true });
+  });
+
+  // Back-compat Healthcheck (same as readiness)
   app.get("/api/health", async (_req, res) => {
     const ok = await pingDb();
     if (!ok) return res.status(503).json({ ok: false });
     res.json({ ok: true });
+  });
+
+  // Observe request durations for API endpoints
+  app.use((req, res, next) => {
+    if (!req.path.startsWith('/api')) return next();
+    const end = httpRequestDuration.startTimer({ method: req.method, route: req.path });
+    res.on('finish', () => {
+      end({ status_code: String(res.statusCode) });
+    });
+    next();
   });
 
   // Pickup Request API
@@ -42,6 +71,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertContactMessageSchema.parse(req.body);
       const message = await storage.createContactMessage(validatedData);
+
+      // Fire-and-forget email notification; do not block response
+      import('./mailer')
+        .then(({ sendContactNotification }) => sendContactNotification({
+          name: message.name,
+          email: message.email,
+          phone: message.phone,
+          subject: message.subject,
+          message: message.message,
+        }))
+        .then((info) => {
+          if ((info as any)?.skipped) {
+            console.warn('[mailer] skipped sending email: SMTP not configured');
+          }
+        })
+        .catch((err) => {
+          console.warn('[mailer] failed to send contact notification', err?.message || err);
+        });
+
       res.status(201).json(message);
     } catch (error) {
       if (error instanceof z.ZodError) {
