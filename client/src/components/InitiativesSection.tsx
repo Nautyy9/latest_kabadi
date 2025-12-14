@@ -6,12 +6,13 @@ import treePlantingImage from "@assets/generated_images/Community_tree_planting_
 import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.png";
 import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.png";
 
-interface InitiativeCardProps {
+type InitiativeCardProps = {
   title: string;
   description: string;
   image: string;
   id: string;
 }
+
 
 function InitiativeCard({ title, description, image, id }: InitiativeCardProps) {
   return (
@@ -44,7 +45,7 @@ function InitiativeCard({ title, description, image, id }: InitiativeCardProps) 
         </p>
         
         {/* Animated button with glow effect */}
-        <Link href={`/initiatives/${id}`}>
+        <Link href={`/initiatives`}>
           <Button 
             variant="ghost" 
             className="group/btn group-hover:translate-x-2 transition-all duration-300 p-0 h-auto text-white hover:text-white relative overflow-hidden" 
@@ -96,12 +97,18 @@ export default function InitiativesSection() {
             Changing society for a sustainable future
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {<InitiativeSectionMapper initiatives={initiatives} />}
+      </div>
+    </section>
+  );
+}
+
+export function InitiativeSectionMapper({initiatives}  : {initiatives: InitiativeCardProps[]}) {
+return (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {initiatives.map((initiative) => (
             <InitiativeCard key={initiative.title} {...initiative} />
           ))}
         </div>
-      </div>
-    </section>
-  );
+)
 }

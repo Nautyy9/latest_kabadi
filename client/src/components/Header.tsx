@@ -25,6 +25,7 @@ export default function Header() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
+    { href: "/initiatives", label: "Initiatives" },
     { href: "/rates", label: "Rates" },
     { href: "/contact", label: "Contact" },
     { href: "/careers", label: "Careers" },
@@ -68,7 +69,7 @@ export default function Header() {
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
-            <Link href="#request-pickup">
+            <Link href="/request-pickup">
               <Button data-testid="button-request-pickup">
                 Request Pickup
               </Button>
@@ -99,7 +100,7 @@ export default function Header() {
                   </Button>
                 </Link>
               ))}
-              <Link href="#request-pickup">
+              <Link href="/request-pickup">
                 <Button
                   className="w-full"
                   onClick={() => setMobileMenuOpen(false)}

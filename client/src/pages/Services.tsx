@@ -140,7 +140,7 @@ export default function Services() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => (window.location.href = "/#request-pickup")}
+                onClick={() => (window.location.href = "/request-pickup")}
                 data-testid="button-request-pickup-services"
                 className="w-full sm:w-auto"
               >

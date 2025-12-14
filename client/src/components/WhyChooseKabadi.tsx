@@ -40,7 +40,7 @@ export default function WhyChooseKabadi({ className = "" }: WhyChooseKabadiProps
             Schedule a free pickup today and get paid the best rates in the market for your scrap materials.
           </p>
           <button 
-            onClick={() => window.location.href = "/#request-pickup"}
+            onClick={() => window.location.href = "/request-pickup"}
             className="w-full bg-kabadi-primary hover:bg-kabadi-emphasis text-white font-bold py-3 px-6 rounded-lg transition-all duration-200"
             data-testid="button-schedule-pickup"
           >

@@ -9,6 +9,9 @@ import Rates from "@/pages/Rates";
 import Contact from "@/pages/Contact";
 import Careers from "@/pages/Careers";
 import NotFound from "@/pages/not-found";
+import Initiatives from "@/pages/Initiatives";
+import RequestPickup from "@/pages/RequestPickup";
+import ScrollToTop from "@/components/ScrollToTop";
 
 function Router() {
   return (
@@ -18,6 +21,8 @@ function Router() {
       <Route path="/rates" component={Rates} />
       <Route path="/contact" component={Contact} />
       <Route path="/careers" component={Careers} />
+      <Route path="/initiatives" component={Initiatives} />
+      <Route path="/request-pickup" component={RequestPickup} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -28,6 +33,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
+        <ScrollToTop />
         <Router />
       </TooltipProvider>
     </QueryClientProvider>
