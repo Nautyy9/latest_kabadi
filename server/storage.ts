@@ -88,7 +88,11 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new (class DbStorage implements IStorage {
+const useMemory = !process.env.DATABASE_URL;
+
+const memStore = new MemStorage();
+
+class DbStorage implements IStorage {
   async createPickupRequest(insertRequest: InsertPickupRequest): Promise<PickupRequest> {
     const [row] = await db
       .insert(pickupRequests)
@@ -148,4 +152,6 @@ export const storage = new (class DbStorage implements IStorage {
     const rows = await db.select().from(careerApplications).orderBy(desc(careerApplications.createdAt));
     return rows as CareerApplication[];
   }
-})();
+}
+
+export const storage: IStorage = useMemory ? new MemStorage() : new DbStorage();
