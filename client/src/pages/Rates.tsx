@@ -56,18 +56,61 @@ const rateItems: RateItem[] = [
 const categories = ["All", "Paper", "Plastic", "Metal", "E-waste", "Other"];
 const locations = ["Delhi", "Mumbai", "Bangalore", "Chennai"];
 
+// Dynamically import images from assets folders and map by basename
+const imageModules = {
+  ...import.meta.glob<string>("@assets/*.{png,jpg,jpeg,webp}", { eager: true, as: "url" }),
+  ...import.meta.glob<string>("@assets/**/*.{png,jpg,jpeg,webp}", { eager: true, as: "url" }),
+};
+
+const imageLookup: Record<string, string> = Object.fromEntries(
+  Object.entries(imageModules).map(([path, url]) => [
+    path
+      .split("/")
+      .pop()!
+      .replace(/\.[^.]+$/, "")
+      .toLowerCase(),
+    url as unknown as string,
+  ]),
+);
+
+function getImageForItem(item: RateItem): string | undefined {
+  const variants = [
+    item.id,
+    item.name,
+    item.name.replace(/\s+/g, "-"),
+    item.name.replace(/\s+/g, "_"),
+    item.name.replace(/[^a-z0-9]/gi, "-").replace(/-+/g, "-"),
+  ]
+    .filter(Boolean)
+    .map((v) => v.toLowerCase());
+
+  for (const key of variants) {
+    if (imageLookup[key]) return imageLookup[key];
+  }
+  return undefined;
+}
+
 function RateCard({ item }: { item: RateItem }) {
   return (
     <div className="bg-kabadi-blue-light dark:bg-slate-900/50 p-3 rounded-2xl">
       <Card className="overflow-hidden hover-elevate h-full group bg-white dark:bg-slate-900 border-0 shadow-md hover:shadow-xl transition-all duration-300">
-        <div className={`h-40 bg-gradient-to-br ${item.color} relative overflow-hidden`}>
-          <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-8xl font-bold text-white/20 group-hover:text-white/30 transition-all">
-              {item.name.charAt(0)}
+        {(() => {
+          const img = getImageForItem(item);
+          return img ? (
+            <div className="h-40 relative overflow-hidden">
+              <img src={img} alt={item.name} className="w-full h-full object-cover" />
             </div>
-          </div>
-        </div>
+          ) : (
+            <div className={`h-40 bg-gradient-to-br ${item.color} relative overflow-hidden`}>
+              <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-8xl font-bold text-white/20 group-hover:text-white/30 transition-all">
+                  {item.name.charAt(0)}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
         
         <div className="p-5">
           <h3 className="text-xl font-bold text-foreground mb-1">{item.name}</h3>

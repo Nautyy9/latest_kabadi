@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { motion } from "framer-motion";
 import treePlantingImage from "@assets/generated_images/Community_tree_planting_initiative_d175b108.png";
 import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.png";
 import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.png";
@@ -66,6 +67,10 @@ function InitiativeCard({ title, description, image, id }: InitiativeCardProps) 
   );
 }
 
+const sectionVariants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } } as const;
+const listContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } } as const;
+const listItem = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } } as const;
+
 export default function InitiativesSection() {
   const initiatives = [
     {
@@ -91,12 +96,12 @@ export default function InitiativesSection() {
   return (
     <section className="py-20 ">
       <div className="max-w-7xl mx-auto px-12 sm:px-12 lg:px-12">
-        <div className="text-center mb-12">
+        <motion.div className="text-center mb-12" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
           <h2 className="mb-4">Our Initiatives</h2>
           <p className="text-lg text-muted-foreground">
             Changing society for a sustainable future
           </p>
-        </div>
+        </motion.div>
         {<InitiativeSectionMapper initiatives={initiatives} />}
       </div>
     </section>
@@ -105,10 +110,12 @@ export default function InitiativesSection() {
 
 export function InitiativeSectionMapper({initiatives}  : {initiatives: InitiativeCardProps[]}) {
 return (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           {initiatives.map((initiative) => (
-            <InitiativeCard key={initiative.title} {...initiative} />
+            <motion.div key={initiative.title} variants={listItem} transition={{ duration: 0.45, ease: "easeOut" }}>
+              <InitiativeCard {...initiative} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 )
 }

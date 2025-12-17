@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import { Users, Scale, Trees, MapPin } from "lucide-react";
 
 interface MetricProps {
@@ -56,11 +57,14 @@ function AnimatedCounter({ end, suffix, label, icon }: MetricProps) {
   );
 }
 
+const listContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } } as const;
+const listItem = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } } as const;
+
 export default function TrustMetrics() {
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           <AnimatedCounter
             end={10000}
             suffix="+"
@@ -85,7 +89,7 @@ export default function TrustMetrics() {
             label="Pickup Locations"
             icon={<MapPin className="h-8 w-8 text-primary" />}
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -63,6 +63,18 @@ export default function Services() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
+  // Scroll to service anchor if hash is present
+  if (typeof window !== 'undefined') {
+    const hash = window.location.hash;
+    if (hash) {
+      // Run after render to ensure nodes exist
+      requestAnimationFrame(() => {
+        const el = document.getElementById(hash.replace('#',''));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -80,8 +92,10 @@ export default function Services() {
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 lg:space-y-20">
             {services.map((service, index) => (
+              
               <div
                 key={service.title}
+               id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$|--+/g, '-')}`}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}

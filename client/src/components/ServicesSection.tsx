@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Car, Leaf, Scissors, Wrench } from "lucide-react";
 import { Link } from "wouter";
+import { motion } from "framer-motion";
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -36,6 +37,10 @@ function ServiceCard({ icon, title, description }: ServiceCardProps) {
   );
 }
 
+const sectionVariants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } } as const;
+const listContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } } as const;
+const listItem = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } } as const;
+
 export default function ServicesSection() {
   const services = [
     {
@@ -63,17 +68,19 @@ export default function ServicesSection() {
   return (
     <section className="py-20   dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-12 sm:px-12 lg:px-12">
-        <div className="text-center mb-16">
+        <motion.div className="text-center mb-16" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
           <h2 className="mb-4">Our Services</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Comprehensive solutions for all your scrap needs - trusted by thousands for quality, professionalism, and fair rates
           </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        </motion.div>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           {services.map((service) => (
-            <ServiceCard key={service.title} {...service} />
+            <motion.div key={service.title} variants={listItem} transition={{ duration: 0.4, ease: "easeOut" }}>
+              <ServiceCard {...service} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

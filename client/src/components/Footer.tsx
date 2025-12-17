@@ -115,10 +115,18 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Our Services</h3>
             <ul className="space-y-2 text-muted-foreground">
-              <li>Vehicle Scrapping</li>
-              <li>Zero Waste Society</li>
-              <li>Paper Shredding</li>
-              <li>Dismantling Services</li>
+              <li>
+                <Link href="/services#service-vehicle-scrapping" className="hover:text-foreground transition-colors">Vehicle Scrapping</Link>
+              </li>
+              <li>
+                <Link href="/services#service-zero-waste-society" className="hover:text-foreground transition-colors">Zero Waste Society</Link>
+              </li>
+              <li>
+                <Link href="/services#service-paper-shredding" className="hover:text-foreground transition-colors">Paper Shredding</Link>
+              </li>
+              <li>
+                <Link href="/services#service-dismantling-services" className="hover:text-foreground transition-colors">Dismantling Services</Link>
+              </li>
             </ul>
           </div>
 
