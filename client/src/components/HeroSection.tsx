@@ -9,8 +9,7 @@ export default function HeroSection() {
   };
 
   const scrollToPricing = () => {
-    const element = document.getElementById("pricing");
-    element?.scrollIntoView({ behavior: "smooth" });
+    window.location.href = "/rates"
   };
 
   return (

@@ -7,6 +7,9 @@ import treePlantingImage from "@assets/generated_images/Community_tree_planting_
 import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.png";
 import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.png";
 
+import PageTransition from "@/components/PageTransition";
+import SectionInView from "@/components/SectionInView";
+
 export default function Initiatives() {
   const initiatives = [
     {
@@ -55,10 +58,11 @@ export default function Initiatives() {
   };
 
   return (
-    <div className="min-h-screen">
+    <PageTransition className="min-h-screen">
       <Header />
       <main>
-        <section className="relative py-20 overflow-visible">
+        <SectionInView>
+          <section className="relative py-20 overflow-visible">
           <div className="absolute inset-0 -top-12 bg-gradient-to-b from-green-50 via-green-50/60 -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6">Our Initiatives</h1>
@@ -67,10 +71,12 @@ export default function Initiatives() {
             </p>
           </div>
         </section>
-
+        </SectionInView>
+    
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 lg:space-y-20">
             {initiatives.map((initiative, index) => (
+              <SectionInView>
               <div
                 key={initiative.title}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
@@ -114,17 +120,20 @@ export default function Initiatives() {
                   </Button>
                 </div>
               </div>
+              </SectionInView>
             ))}
           </div>
         </section>
-
+        
+          <SectionInView>
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <WhyChooseKabadi />
           </div>
         </section>
+          </SectionInView>
       </main>
       <Footer />
-    </div>
+    </PageTransition>
   );
 }

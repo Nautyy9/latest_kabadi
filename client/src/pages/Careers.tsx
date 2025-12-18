@@ -5,6 +5,9 @@ import WhyChooseKabadi from "@/components/WhyChooseKabadi";
 import { Card } from "@/components/ui/card";
 import { Users, Heart, TrendingUp, Award } from "lucide-react";
 
+import PageTransition from "@/components/PageTransition";
+import SectionInView from "@/components/SectionInView";
+
 export default function Careers() {
   const benefits = [
     {
@@ -30,10 +33,11 @@ export default function Careers() {
   ];
 
   return (
-    <div className="min-h-screen">
+    <PageTransition className="min-h-screen">
       <Header />
       <main>
-        <section className="relative py-20 overflow-visible">
+        <SectionInView>
+          <section className="relative py-20 overflow-visible">
           <div className="absolute inset-0 -top-12  bg-gradient-to-b from-green-50 via-green-50/60  -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6">Join Our Team</h1>
@@ -42,7 +46,9 @@ export default function Careers() {
             </p>
           </div>
         </section>
+          </SectionInView>
 
+        <SectionInView>
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -64,17 +70,21 @@ export default function Careers() {
             </div>
           </div>
         </section>
+        </SectionInView>
 
+        <SectionInView>
         <CareerSection />
-
+        </SectionInView>
         {/* Why Choose Section */}
+        <SectionInView>
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <WhyChooseKabadi />
           </div>
         </section>
+        </SectionInView>
       </main>
       <Footer />
-    </div>
+    </PageTransition>
   );
 }

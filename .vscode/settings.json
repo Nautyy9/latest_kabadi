@@ -6,5 +6,6 @@
         "Authorization": "Bearer ${env:rnd_rlMxBppGLTIUQtZCE9SZZkN1kaYW}"
       }
     }
-  }
+  },
+  "atlascode.rovodev.thinkingBlockEnabled": false
 }

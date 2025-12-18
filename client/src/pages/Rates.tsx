@@ -133,6 +133,9 @@ function RateCard({ item }: { item: RateItem }) {
   );
 }
 
+import PageTransition from "@/components/PageTransition";
+import SectionInView from "@/components/SectionInView";
+
 export default function Rates() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -148,10 +151,11 @@ export default function Rates() {
   }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen">
+    <PageTransition className="min-h-screen">
       <Header />
       <main>
-        <section className="relative py-20 overflow-visible">
+        <SectionInView>
+          <section className="relative py-20 overflow-visible">
           <div className="absolute inset-0 -top-12  bg-gradient-to-b from-green-50 via-green-50/60 to-transparent -z-10 pointer-events-none"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 ">
@@ -162,7 +166,9 @@ export default function Rates() {
             </p>
           </div>
         </section>
+          </SectionInView>
 
+      
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Search and Filter Section */}
@@ -199,16 +205,17 @@ export default function Rates() {
               {/* Category Filter Buttons */}
               <div className="flex gap-3 flex-wrap">
                 {categories.map((cat) => (
+                  
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`px-6 py-2.5 rounded-lg font-semibold transition-all text-sm ${
                       selectedCategory === cat
-                        ? "bg-kabadi-emphasis text-white"
-                        : "bg-slate-700 dark:bg-slate-600 text-slate-200 hover-elevate"
-                    }`}
-                    data-testid={`button-category-${cat.toLowerCase()}`}
-                  >
+                      ? "bg-kabadi-emphasis text-white"
+                      : "bg-slate-700 dark:bg-slate-600 text-slate-200 hover-elevate"
+                      }`}
+                      data-testid={`button-category-${cat.toLowerCase()}`}
+                      >
                     {cat}
                   </button>
                 ))}
@@ -223,7 +230,9 @@ export default function Rates() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5">
                 {filteredItems.length > 0 ? (
                   filteredItems.map((item) => (
+                    <SectionInView>
                     <RateCard key={item.id} item={item} />
+                      </SectionInView>
                   ))
                 ) : (
                   <div className="col-span-full text-center py-12">
@@ -237,8 +246,9 @@ export default function Rates() {
             <WhyChooseKabadi className="mt-16" />
           </div>
         </section>
+  
       </main>
       <Footer />
-    </div>
+    </PageTransition>
   );
 }

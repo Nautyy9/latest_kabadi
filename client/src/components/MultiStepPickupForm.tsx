@@ -1,4 +1,5 @@
 import { useState } from "react";
+import StepProgress from "@/components/StepProgress";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -175,7 +176,7 @@ export default function MultiStepPickupForm() {
 
   return (
     <section id="request-pickup" className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
         {/* Floating particles */}
         <div className="absolute top-8 right-8 w-2 h-2 bg-green-400/30 rounded-full animate-pulse"></div>
         <div className="absolute bottom-12 left-6 w-1 h-1 bg-blue-400/40 rounded-full animate-ping"></div>
@@ -194,62 +195,17 @@ export default function MultiStepPickupForm() {
         </div>
 
         {/* Step Indicator */}
-        <div className="mb-16">
-          <div className="flex items-center justify-between max-w-4xl mx-auto relative">
-            {steps.map((step, index) => (
-              <div key={step.number} className="flex items-center">
-                {/* Step Circle */}
-                <div className="flex flex-col items-center relative z-20">
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-300 shadow-lg",
-                      currentStep > step.number
-                        ? "bg-primary/10  text-primary scale-110"
-                        : currentStep === step.number
-                        ? "bg-primary/20 animate-pulse duration-700 text-primary  p-2   ring-2 ring-primary dark:ring-green-800 te"
-                        : "bg-white dark:bg-slate-800 text-slate-400 border-2 border-slate-300 dark:border-slate-600"
-                    )}
-                    data-testid={`step-indicator-${step.number}`}
-                  >
-                    {currentStep > step.number ? <Check className="w-6 h-6" /> : step.number}
-                  </div>
-                  <div className="mt-4 text-center max-w-32">
-                    <div
-                      className={cn(
-                        "font-semibold text-sm mb-1 transition-colors duration-300",
-                        currentStep >= step.number ? "text-green-600 dark:text-green-400" : "text-muted-foreground"
-                      )}
-                    >
-                      {step.title}
-                    </div>
-                    {/* <div className="text-xs text-muted-foreground leading-tight hidden sm:block">{step.description}</div> */}
-                  </div>
-                </div>
-                
-                {/* Connecting Line (only if not the last step) */}
-                {index < steps.length - 1 && (
-                  <div className="flex-1 mx-4 relative">
-                    <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
-                    <div 
-                      className={cn(
-                        "absolute top-0 left-0 h-1 rounded-full transition-all duration-500",
-                        currentStep > step.number 
-                          ? "bg-gradient-to-r from-green-600 to-blue-600 w-full" 
-                          : "bg-transparent w-0"
-                      )}
-                    ></div>
-                  </div>
-                )}
-              </div>
-            ))}
+        {
+          <div className="w-full h-full hidden min-[900px]:block">
+          <StepProgress steps={steps} currentStep={currentStep} />
           </div>
-        </div>
 
+        }
         {/* Main Form Card with Glassmorphism */}
         <div className="relative group">
           {/* Animated background with glassmorphism */}
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
           
           <Card className="relative z-10 p-10 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden">
           {/* Step 1: Select Scrap Types */}
@@ -263,14 +219,19 @@ export default function MultiStepPickupForm() {
                 <p className="text-muted-foreground">Choose the materials you want to sell</p>
                 <div className="w-16 h-1  bg-slate-200  rounded-full mx-auto mt-3"></div>
               </div>
+                {
+          <div className="w-full h-full hidden sm:block min-[900px]:hidden">
+          <StepProgress steps={steps} currentStep={currentStep} />
+          </div>
 
+        }
               {/* Scrap Types Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
                 {scrapTypes.map((type) => (
                 <div
                   key={type.id}
                   className={cn(
-                    "group/card relative p-6 cursor-pointer transition-all duration-300 rounded-xl border-2 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-900/20",
+                    "group/card relative p-6 cursor-pointer transition-all duration-300 rounded-xl border-2 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-900/20 overflow-hidden",
                     selectedScrapTypes.includes(type.id)
                       ? "border-green-200/50 bg-gradient-to-r from-green-50 to-blue-50/30 dark:from-green-950/30 dark:to-blue-950/30 shadow-md"
                       : "border-slate-200 dark:border-green-800 bg-white/50 dark:bg-slate-800/50 hover:border-green-400 dark:hover:border-green-600"
@@ -344,7 +305,12 @@ export default function MultiStepPickupForm() {
                 </div>
                 <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mt-3"></div>
               </div>
+  {
+          <div className="w-full h-full  hidden sm:block min-[900px]:hidden">
+          <StepProgress steps={steps} currentStep={currentStep} />
+          </div>
 
+        }
               {/* Form Fields */}
               <div className="space-y-6">
                 {/* Name Field */}
@@ -529,7 +495,12 @@ export default function MultiStepPickupForm() {
                 </div>
                 <div className="w-16 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mt-3"></div>
               </div>
+  {
+          <div className="w-full h-full hidden sm:block  min-[900px]:hidden">
+          <StepProgress steps={steps} currentStep={currentStep} />
+          </div>
 
+        }
               {/* Form Fields */}
               <div className="space-y-6">
                 {/* Address Field */}
@@ -626,6 +597,12 @@ export default function MultiStepPickupForm() {
                 <h3 className="text-2xl font-bold mb-2">Review Your Request</h3>
                 <p className="text-muted-foreground">Please verify all details before submitting</p>
               </div>
+                {
+          <div className="w-full h-full hidden  sm:block min-[900px]:hidden">
+          <StepProgress steps={steps} currentStep={currentStep} />
+          </div>
+
+        }
               <Card className="p-6 bg-muted/30">
                 <div className="space-y-4">
                   <div>

@@ -1,29 +1,29 @@
-import { useEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useLocation } from "wouter";
 
 export default function ScrollToTop() {
   const [location] = useLocation();
+  const mountedRef = useRef(false);
 
-  useEffect(() => {
-    // Disable browser scroll restoration to prevent carrying scroll between routes
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
+  useLayoutEffect(() => {
+    // Always manage scroll manually for SPA routing
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
 
-    // Scroll to top on every route change (instant, no animation)
-    const snapTop = () => {
-      window.scrollTo(0, 0);
-      // extra safety for some mobile browsers
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    };
+    // On initial mount, don't force scroll (stay where the browser is)
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      return;
+    }
 
-    // Ensure it runs after the new route has rendered
-    requestAnimationFrame(() => {
-      snapTop();
-      // Run twice to beat late layout shifts
-      requestAnimationFrame(snapTop);
-    });
+    // If navigating to a hash on the same page, let browser handle it
+    if (window.location.hash) return;
+
+    // Immediately reset scroll BEFORE paint to avoid flashing previous position
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [location]);
 
   return null;

@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Home, Search, ArrowLeft, Recycle, TreePine, Leaf } from "lucide-react";
 import { Link } from "wouter";
 
+import PageTransition from "@/components/PageTransition";
+
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-kabadi-blue-light via-white to-green-50 relative overflow-hidden">
+    <PageTransition className="min-h-screen bg-gradient-to-br from-kabadi-blue-light via-white to-green-50 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Recycle Icons */}
@@ -116,6 +118,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }

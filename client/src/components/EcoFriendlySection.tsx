@@ -60,7 +60,7 @@ export default function EcoFriendlySection() {
             </p>
             <motion.div className="grid gap-4"  >
               {benefits.map((benefit) => (
-                <motion.div variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: false, amount: 1 }} >
+                <motion.div variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 1 }} >
                   <Card key={benefit.title} className="p-6 bg-white border-l-2 border-l-green-500">
                   <div className="flex items-start gap-4">
                     <div className=" p-3 rounded-lg flex-shrink-0">
