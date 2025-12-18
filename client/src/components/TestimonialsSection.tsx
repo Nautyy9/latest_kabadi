@@ -17,7 +17,7 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ name, location, rating, text, image }: TestimonialCardProps) {
   return (
-    <Card className="p-6 h-60 w-fit hover-elevate">
+    <Card className="p-6 min-h-60 w-fit hover-elevate">
       <div className="flex gap-1 mb-4">
         {[...Array(5)].map((_, i) => (
           <Star key={i} className={cn("h-5 w-5 stroke-amber-500  text-amber-500", i<rating ? "fill-amber-500" : "fill-white")} />

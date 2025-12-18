@@ -176,7 +176,7 @@ export default function MultiStepPickupForm() {
 
   return (
     <section id="request-pickup" className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mobile-form-container">
         {/* Floating particles */}
         <div className="absolute top-8 right-8 w-2 h-2 bg-green-400/30 rounded-full animate-pulse"></div>
         <div className="absolute bottom-12 left-6 w-1 h-1 bg-blue-400/40 rounded-full animate-ping"></div>
@@ -185,7 +185,7 @@ export default function MultiStepPickupForm() {
        {/* Honey-pot field to catch bots */}
        <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold  mb-4">
+          <h2 className="text-5xl lg:text-6xl font-bold  mb-4">
             Request a Pickup 🚛
           </h2>
           <p className="text-xl text-muted-foreground">
@@ -207,16 +207,16 @@ export default function MultiStepPickupForm() {
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
           
-          <Card className="relative z-10 p-10 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden">
+          <Card className="relative z-10 p-10 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden mobile-form-card">
           {/* Step 1: Select Scrap Types */}
           {currentStep === 1 && (
             <div className="space-y-8">
               {/* Step Header */}
-              <div className="text-center">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3">
+              <div className="text-center mobile-form-header">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3 mobile-form-title">
                   Select Scrap Types ♻️
                 </h3>
-                <p className="text-muted-foreground">Choose the materials you want to sell</p>
+                <p className="text-muted-foreground mobile-form-subtitle">Choose the materials you want to sell</p>
                 <div className="w-16 h-1  bg-slate-200  rounded-full mx-auto mt-3"></div>
               </div>
                 {
@@ -226,14 +226,14 @@ export default function MultiStepPickupForm() {
 
         }
               {/* Scrap Types Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative mobile-scrap-grid">
                 {scrapTypes.map((type) => (
                 <div
                   key={type.id}
                   className={cn(
-                    "group/card relative p-6 cursor-pointer transition-all duration-300 rounded-xl border-2 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-900/20 overflow-hidden",
+                    "group/card relative p-6 cursor-pointer transition-all duration-300 rounded-xl border-2 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-900/20 overflow-hidden mobile-scrap-card",
                     selectedScrapTypes.includes(type.id)
-                      ? "border-green-200/50 bg-gradient-to-r from-green-50 to-blue-50/30 dark:from-green-950/30 dark:to-blue-950/30 shadow-md"
+                      ? "border-green-200/50 bg-gradient-to-r from-green-50 to-blue-50/30 dark:from-green-950/30 dark:to-blue-950/30 shadow-md selected"
                       : "border-slate-200 dark:border-green-800 bg-white/50 dark:bg-slate-800/50 hover:border-green-400 dark:hover:border-green-600"
                   )}
                   onClick={() => toggleScrapType(type.id)}
@@ -247,7 +247,7 @@ export default function MultiStepPickupForm() {
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-4">
                       <div className={cn(
-                        "p-3 rounded-lg transition-colors duration-300",
+                        "p-3 rounded-lg transition-colors duration-300 mobile-scrap-icon",
                         selectedScrapTypes.includes(type.id) 
                           ? "bg-green-500/20 text-green-600 dark:text-green-400" 
                           : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 group-hover/card:bg-green-100 dark:group-hover/card:bg-green-900/30"
@@ -260,21 +260,21 @@ export default function MultiStepPickupForm() {
                         </div>
                       )}
                     </div>
-                    <h4 className="font-semibold text-lg mb-2 text-slate-800 dark:text-slate-200">{type.name}</h4>
-                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                    <h4 className="font-semibold text-lg mb-2 text-slate-800 dark:text-slate-200 mobile-scrap-name">{type.name}</h4>
+                    <p className="text-2xl font-bold text-green-600 dark:text-green-400 mobile-scrap-rate">
                       ₹{type.rate}<span className="text-sm text-muted-foreground font-normal">/kg</span>
                     </p>
                   </div>
                 </div>
                 ))}
               </div>
-              <div className="flex justify-end ">
+              <div className="flex justify-end mobile-form-nav">
                 <Button
                   size="lg"
                   onClick={() => setCurrentStep(2)}
                   disabled={!canProceedToStep2()}
                   data-testid="button-next-step-1"
-                className="flex items-center gap-3 h-12 px-8 bg-primary text-white rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-3 h-12 px-8 bg-primary text-white rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed mobile-form-button"
                 >
                   <span className="relative z-10 flex items-center gap-2 ">
                     Continue
