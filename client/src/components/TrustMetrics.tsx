@@ -64,12 +64,12 @@ export default function TrustMetrics() {
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+        <motion.div className=" grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           <AnimatedCounter
             end={10000}
             suffix="+"
             label="Customers Served"
-            icon={<Users className="h-8 w-8 text-primary" />}
+            icon={<Users className=" h-8 w-8 text-primary" />}
           />
           <AnimatedCounter
             end={50000}
@@ -87,7 +87,7 @@ export default function TrustMetrics() {
             end={150}
             suffix="+"
             label="Pickup Locations"
-            icon={<MapPin className="h-8 w-8 text-primary" />}
+            icon={<MapPin className=" h-8 w-8 text-primary" />}
           />
         </motion.div>
       </div>

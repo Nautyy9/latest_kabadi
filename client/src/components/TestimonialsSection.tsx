@@ -71,7 +71,7 @@ export default function TestimonialsSection() {
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="text-center mb-12" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+        <motion.div className="text-center mb-12" >
           <h2 className="text-4xl lg:text-5xl mb-4">What Our Customers Say</h2>
           <p className="text-xl text-muted-foreground">
             Join thousands of satisfied customers
@@ -79,7 +79,7 @@ export default function TestimonialsSection() {
         </motion.div>
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           {testimonials.map((testimonial) => (
-            <motion.div key={testimonial.name} variants={listItem} transition={{ duration: 0.45, ease: "easeOut" }}>
+            <motion.div key={testimonial.name} variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
               <TestimonialCard {...testimonial} />
             </motion.div>
           ))}

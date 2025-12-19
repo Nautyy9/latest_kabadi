@@ -60,7 +60,7 @@ export default function Careers() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {benefits.map((benefit) => (
                 <Card key={benefit.title} className="p-6 text-center bg-white border-green-200 bg-gradient-to-br from-green-50/80">
-                  <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="border border-green-300 dark:border-green-600 bg-kabadi-light w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     {benefit.icon}
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{benefit.title}</h3>

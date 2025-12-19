@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 type formType = {
     name: string,
     email: string,
@@ -144,48 +145,54 @@ export default function CareerSection() {
         </div>
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           <div className="lg:col-span-2">
-            <div className="space-y-6">
+            <motion.div className="space-y-6" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}>
               <h3 className="text-2xl font-semibold text-foreground mb-6">Why Join Us?</h3>
+                <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                  <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                  
+                  <div className="flex gap-3">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className=" text-green-600 dark:text-green-400 font-bold">✓</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Make a Real Impact</h4>
+                      <p className="text-sm text-muted-foreground">Contribute to environmental sustainability</p>
+                    </div>
+                  </div>
+                </Card>
+                </motion.div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
                 <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                
-                <div className="flex gap-3">
-                  <div className="bg-green-100 dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
+                              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                              
+                  <div className="flex gap-3">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Competitive Benefits</h4>
+                      <p className="text-sm text-muted-foreground">Great compensation and growth opportunities</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Make a Real Impact</h4>
-                    <p className="text-sm text-muted-foreground">Contribute to environmental sustainability</p>
+                </Card>
+                </motion.div>
+                <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                              
+                  <div className="flex gap-3">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Growing Team</h4>
+                      <p className="text-sm text-muted-foreground">Join a passionate and dedicated community</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
-              <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                            
-                <div className="flex gap-3">
-                  <div className="bg-green-100 dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Competitive Benefits</h4>
-                    <p className="text-sm text-muted-foreground">Great compensation and growth opportunities</p>
-                  </div>
-                </div>
-              </Card>
-              <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50  transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                            
-                <div className="flex gap-3">
-                  <div className="bg-green-100 dark:bg-green-900/30 w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Growing Team</h4>
-                    <p className="text-sm text-muted-foreground">Join a passionate and dedicated community</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
+                </Card>
+                </motion.div>
+            </motion.div>
           </div>
           <div className="lg:col-span-3">
             <div className="relative group p-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-3xl border-green-200/50 border">
@@ -443,8 +450,9 @@ export default function CareerSection() {
                   <Button 
                     type="submit" 
                     data-testid="button-submit-career"
-                    className="flex w-max mx-auto px-8 justify-center items-center h-14 bg-primary text-white text-lg rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden mobile-form-button"
-                  >
+                    className="w-max px-8 flex mx-auto h-14 bg-primary text-white text-lg border-none rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden"
+
+                    >
                     <span className="relative z-10 flex items-center justify-center gap-3">
                       Apply Now ✨
                       <div className="group-hover/btn:translate-x-1 transition-transform duration-200">

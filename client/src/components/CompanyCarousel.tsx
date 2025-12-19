@@ -28,7 +28,7 @@ export default function CompanyCarousel() {
                 key={`${company.name}-${index}`}
                 className="flex-shrink-0 px-8 py-6 flex flex-col items-center gap-3 min-w-[200px]"
               >
-                <div className="bg-primary/10 p-4 rounded-2xl">
+                <div className="border border-green-300 dark:border-green-600 bg-kabadi-light p-4 rounded-2xl">
                   {company.icon}
                 </div>
                 <p className="text-lg font-bold text-foreground whitespace-nowrap">

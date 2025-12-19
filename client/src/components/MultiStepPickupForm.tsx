@@ -11,6 +11,7 @@ import { Check, ChevronRight, Recycle, Wrench, FileText, Box, Smartphone, Lightb
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 interface ScrapType {
   id: string;
@@ -20,12 +21,12 @@ interface ScrapType {
 }
 
 const scrapTypes: ScrapType[] = [
-  { id: "plastic", name: "Plastic", rate: 20, icon: <Recycle className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
-  { id: "metal", name: "Metal", rate: 40, icon: <Wrench className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
-  { id: "paper", name: "Paper", rate: 12, icon: <FileText className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
-  { id: "cardboard", name: "Cardboard", rate: 15, icon: <Box className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
-  { id: "electronics", name: "Electronics", rate: 35, icon: <Smartphone className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
-  { id: "glass", name: "Glass", rate: 8, icon: <Lightbulb className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "plastic", name: "Plastic", rate: 20, icon: <Recycle className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
+  { id: "metal", name: "Metal", rate: 40, icon: <Wrench className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
+  { id: "paper", name: "Paper", rate: 12, icon: <FileText className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
+  { id: "cardboard", name: "Cardboard", rate: 15, icon: <Box className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
+  { id: "electronics", name: "Electronics", rate: 35, icon: <Smartphone className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
+  { id: "glass", name: "Glass", rate: 8, icon: <Lightbulb className="absolute  left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 text-green-500" /> },
 ];
 
 export default function MultiStepPickupForm() {
@@ -213,7 +214,7 @@ export default function MultiStepPickupForm() {
             <div className="space-y-8">
               {/* Step Header */}
               <div className="text-center mobile-form-header">
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3 mobile-form-title">
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3 mobile-form-title">
                   Select Scrap Types ♻️
                 </h3>
                 <p className="text-muted-foreground mobile-form-subtitle">Choose the materials you want to sell</p>
@@ -226,9 +227,15 @@ export default function MultiStepPickupForm() {
 
         }
               {/* Scrap Types Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative mobile-scrap-grid">
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative mobile-scrap-grid"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+              >
                 {scrapTypes.map((type) => (
-                <div
+                <motion.div
                   key={type.id}
                   className={cn(
                     "group/card relative p-6 cursor-pointer transition-all duration-300 rounded-xl border-2 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-900/20 overflow-hidden mobile-scrap-card",
@@ -238,6 +245,8 @@ export default function MultiStepPickupForm() {
                   )}
                   onClick={() => toggleScrapType(type.id)}
                   data-testid={`scrap-type-${type.id}`}
+                  variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
+                  initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   {/* Hover glow effect */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-100 to-blue-100/50 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
@@ -245,36 +254,37 @@ export default function MultiStepPickupForm() {
                   
                   {/* Content */}
                   <div className="relative z-10">
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="flex  justify-start min-[401px]:justify-between mb-4">
                       <div className={cn(
-                        "p-3 rounded-lg transition-colors duration-300 mobile-scrap-icon",
+                        " relative border-green-300 dark:border-green-600 border h-14 w-14 sm:h-16 sm:w-16 min-[401px]:mx-auto p-4 rounded-xl transition-colors duration-300 ",
                         selectedScrapTypes.includes(type.id) 
-                          ? "bg-green-500/20 text-green-600 dark:text-green-400" 
-                          : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 group-hover/card:bg-green-100 dark:group-hover/card:bg-green-900/30"
+                          ? "bg-green-100 text-green-600 dark:text-green-400" 
+                          : "bg-kabadi-light text-green-600 dark:bg-green-900/30 dark:text-green-300 group-hover/card:bg-green-100 dark:group-hover/card:bg-green-900/40"
                       )}>
                         {type.icon}
                       </div>
                       {selectedScrapTypes.includes(type.id) && (
-                        <div className="bg-green-500 rounded-full p-1.5 animate-scale-in">
+                        <div className="absolute -right-2 -top-2 bg-green-500 rounded-full p-1.5 animate-scale-in h-max">
                           <Check className="h-4 w-4 text-white" />
                         </div>
                       )}
                     </div>
-                    <h4 className="font-semibold text-lg mb-2 text-slate-800 dark:text-slate-200 mobile-scrap-name">{type.name}</h4>
-                    <p className="text-2xl font-bold text-green-600 dark:text-green-400 mobile-scrap-rate">
+                    <h4 className= "text-start min-[401px]:text-center font-semibold text-xl mb-2 text-slate-800 dark:text-slate-200 mobile-scrap-name">{type.name}</h4>
+                    <p className="text-2xl font-bold min-[401px]:text-center text-green-600 dark:text-green-400 mobile-scrap-rate">
                       ₹{type.rate}<span className="text-sm text-muted-foreground font-normal">/kg</span>
                     </p>
                   </div>
-                </div>
+                </motion.div>
                 ))}
-              </div>
+              </motion.div>
               <div className="flex justify-end mobile-form-nav">
                 <Button
                   size="lg"
                   onClick={() => setCurrentStep(2)}
                   disabled={!canProceedToStep2()}
                   data-testid="button-next-step-1"
-                className="flex items-center gap-3 h-12 px-8 bg-primary text-white rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed mobile-form-button"
+                    className="w-max px-14 flex mx-auto h-14 bg-primary text-white text-lg border-none rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden"
+
                 >
                   <span className="relative z-10 flex items-center gap-2 ">
                     Continue

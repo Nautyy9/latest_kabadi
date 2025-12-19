@@ -40,7 +40,7 @@ export default function HeroSection() {
             {/* Feature Section - Clean Column Layout */}
             <div className="flex flex-wrap justify-between min-[900px]:justify-around lg:justify-start gap-6  py-4">
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                <div className="border border-green-300 dark:border-green-600 bg-kabadi-light p-3 rounded-lg dark:border-primary-border/10">
                   <Leaf className="text-primary h-6 w-6 stroke-[1.5]" />
                 </div>
                 <div>
@@ -49,7 +49,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                <div className="border border-green-300 dark:border-green-600 bg-kabadi-light p-3 rounded-lg dark:border-primary-border/10">
                   <TrendingUp className="h-6 w-6 text-primary stroke-[1.5]" />
                 </div>
                 <div>
@@ -58,7 +58,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
+                <div className="border border-green-300 dark:border-green-600 bg-kabadi-light p-3 rounded-lg   dark:border-primary-border/10">
                   <Clock className="h-6 w-6 text-primary stroke-[1.5]" />
                 </div>
                 <div>

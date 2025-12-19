@@ -4,14 +4,23 @@ import { SiFacebook, SiX, SiInstagram, SiLinkedin } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const { toast } = useToast();
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
-    setEmail("");
+    try {
+      const res = await apiRequest("POST", "/api/newsletter-subscriptions", { email, botField: "" });
+      await res.json();
+      toast({ title: "Subscribed!", description: "You will receive updates from us shortly." });
+      setEmail("");
+    } catch (err: any) {
+      toast({ title: "Subscription failed", description: err?.message || "Please try again later", variant: "destructive" });
+    }
   };
 
   const [, navigate] = useLocation();
@@ -39,10 +48,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="bg-primary rounded-full p-1.5">
-                <Leaf className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold">The Kabadi</span>
+              <img src="/favicon.webp" alt="The Kabadi" className="h-8 w-auto" />
             </div>
             <p className="text-muted-foreground mb-4">
               Making society eco-friendly, one pickup at a time. Sell your scrap

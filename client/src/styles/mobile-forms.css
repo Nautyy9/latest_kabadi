@@ -208,14 +208,7 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   }
 
-  .mobile-scrap-icon {
-    @apply w-10 h-10 mb-2;
-    min-width: 2.5rem;
-    min-height: 2.5rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
+
 
   .mobile-scrap-name {
     @apply text-xs font-medium text-center;
