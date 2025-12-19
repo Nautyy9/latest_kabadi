@@ -9,6 +9,7 @@ import paperImage from "@assets/generated_images/Professional_paper_shredding_se
 
 import PageTransition from "@/components/PageTransition";
 import SectionInView from "@/components/SectionInView";
+import { useEffect } from "react";
 
 export default function Services() {
   const services = [
@@ -66,17 +67,27 @@ export default function Services() {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
-  // Scroll to service anchor if hash is present
+  // Smooth-scroll to hash on mount and on hash changes
   if (typeof window !== 'undefined') {
-    const hash = window.location.hash;
-    if (hash) {
-      // Run after render to ensure nodes exist
-      requestAnimationFrame(() => {
-        const el = document.getElementById(hash.replace('#',''));
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    }
+    // no-op here; handled in useEffect below
   }
+
+  // Handle hash scrolling on mount and when hash changes (same-route navigation)
+  useEffect(() => {
+    const doScroll = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+      const id = hash.slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        // delay to ensure layout is stable
+        requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      }
+    };
+    doScroll();
+    window.addEventListener('hashchange', doScroll);
+    return () => window.removeEventListener('hashchange', doScroll);
+  }, []);
 
   return (
     <PageTransition className="min-h-screen">
@@ -84,9 +95,9 @@ export default function Services() {
       <main>
         <SectionInView>
           <section className="relative py-20 overflow-visible">
-          <div className="absolute inset-0 -top-12 bg-gradient-to-b from-green-50 via-green-50/60 -z-10 pointer-events-none"></div>
+          <div className="absolute inset-x-0 -top-24 bottom-0 bg-gradient-to-b from-green-50 via-green-50/60 to-transparent -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6">Our Services</h1>
+            <h1 className=" text-5xl lg:text-6xl font-bold mb-6">Our Services</h1>
             <p className="text-xl text-muted-foreground">
               Comprehensive eco-friendly solutions for all your scrap and waste management needs
             </p>
@@ -96,16 +107,16 @@ export default function Services() {
         <section className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 lg:space-y-20">
             {services.map((service, index) => (
-        <SectionInView>
+        <SectionInView key={index+ service.title}>
               
               <div
                 key={service.title}
                id={`service-${service.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$|--+/g, '-')}`}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
+                className={`scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
               >
-                <div className={`${index % 2 === 1 ? "lg:order-2" : ""} order-2 lg:order-none`}>
+                <div className={`order-1 lg:order-none ${index % 2 === 1 ? "lg:order-2" : ""} hidden lg:block`}>
                   <Card className="overflow-hidden hover-elevate">
                     <div className="relative bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/20 dark:to-green-900/20 p-4 sm:p-6 lg:p-0">
                       <img
@@ -121,6 +132,20 @@ export default function Services() {
                   <p className="text-base lg:text-lg text-muted-foreground mb-6">
                     {service.description}
                   </p>
+
+                  {/* Mobile/Tablet image placed under heading & subtext */}
+                  <div className="lg:hidden mb-6">
+                    <Card className="overflow-hidden hover-elevate">
+                      <div className="relative bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950/20 dark:to-green-900/20 p-4 sm:p-6">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="rounded-2xl shadow-lg w-full max-h-64 object-cover"
+                        />
+                      </div>
+                    </Card>
+                  </div>
+
                   <Card className="p-4 sm:p-6 mb-6 bg-gradient-to-r from-green-50 via-green-50/50 to-white dark:bg-green-950/20 border-l-4 border-l-green-600">
                     <h3 className="font-semibold text-base lg:text-lg mb-4 text-foreground">Key Features:</h3>
                     <ul className="space-y-2">

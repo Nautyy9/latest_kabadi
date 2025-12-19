@@ -41,7 +41,7 @@ export default function WhyChooseKabadi({ className = "" }: WhyChooseKabadiProps
             </li>
           </motion.ul>
         </motion.div>
-        <motion.div className="bg-white dark:bg-slate-900 rounded-xl p-8 shadow-lg border border-slate-200 dark:border-slate-800" variants={rightVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.55, ease: 'easeOut' }} >
+        <motion.div className="bg-white dark:bg-slate-900 w-full rounded-xl p-8 shadow-lg border border-slate-200 dark:border-slate-800" variants={rightVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.55, ease: 'easeOut' }} >
           <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Sell?</h3>
           <p className="text-muted-foreground mb-6">
             Schedule a free pickup today and get paid the best rates in the market for your scrap materials.
@@ -51,11 +51,19 @@ export default function WhyChooseKabadi({ className = "" }: WhyChooseKabadiProps
            if (isRequestPickup) {
              return (
                <a
-                href="#"
-                 className="group w-full  [&_svg]:hover:animate-bounce flex items-center justify-center bg-kabadi-primary hover:bg-kabadi-emphasis text-white font-bold py-3 px-6 rounded-lg"
-                 
+                 href="#pickup-form-top"
+                 onClick={(e) => {
+                   e.preventDefault();
+                   const el = document.getElementById("pickup-form-top");
+                   if (el) {
+                     el.scrollIntoView({ behavior: "smooth", block: "start" });
+                   } else {
+                     window.scrollTo({ top: 0, behavior: "smooth" });
+                   }
+                 }}
+                 className="group w-full [&_svg]:hover:animate-bounce flex items-center justify-center bg-kabadi-primary hover:bg-kabadi-emphasis text-white font-bold py-3 px-6 rounded-lg"
                >
-                <ArrowUp className=' '></ArrowUp> 
+                 <ArrowUp />
                </a>
              );
            }

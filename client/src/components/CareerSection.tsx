@@ -8,10 +8,17 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-
+type formType = {
+    name: string,
+    email: string,
+    phone: string,
+    position: string,
+    coverLetter: string,
+    botField?: string,
+}
 export default function CareerSection() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formType>({
     name: "",
     email: "",
     phone: "",
@@ -128,9 +135,9 @@ export default function CareerSection() {
 
   return (
     <section className="py-20 bg-white dark:bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-form-container">
         <div className="text-center mb-12">
-          <h2 className="mb-4">Join Our Green Mission</h2>
+          <h2 className=" text-4xl md:text-5xl mb-4">Join Our Green Mission</h2>
           <p className="text-xl text-muted-foreground">
             Be part of a team that's making a difference for the environment
           </p>
@@ -183,15 +190,15 @@ export default function CareerSection() {
           <div className="lg:col-span-3">
             <div className="relative group p-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-3xl border-green-200/50 border">
               {/* Animated background with glassmorphism */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+              <div className= "hidden min-[500px]:block absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
+              <div className= "hidden min-[500px]:block absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
               
               {/* Floating particles */}
               <div className="absolute top-8 right-8 w-2 h-2 bg-green-400/30 rounded-full animate-pulse"></div>
               <div className="absolute bottom-12 left-6 w-1 h-1 bg-blue-400/40 rounded-full animate-ping"></div>
               <div className="absolute top-20 left-12 w-1.5 h-1.5 bg-green-300/20 rounded-full animate-bounce"></div>
               
-              <Card className="relative z-10 p-10 shadow-lg bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden">
+              <Card className="relative z-10 bg-transparent shadown min-[500px]:p-10 min-[500px]:shadow-lg min-[500px]:bg-white/95 dark:min-[500px]:bg-slate-900/95 min-[500px]:backdrop-blur-md border-0 rounded-2xl overflow-hidden">
                 {/* Header with animated gradient */}
                 <div className="text-center mb-8">
                   <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3">
@@ -204,7 +211,7 @@ export default function CareerSection() {
                   <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mt-3"></div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-6 mobile-contact-grid" noValidate>
                   {/* Honey-pot field to catch bots */}
                   <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
                   {/* Name Field */}
@@ -436,7 +443,7 @@ export default function CareerSection() {
                   <Button 
                     type="submit" 
                     data-testid="button-submit-career"
-                    className="flex w-max mx-auto px-8 justify-center items-center h-14 bg-primary   text-white text-lg  rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden"
+                    className="flex w-max mx-auto px-8 justify-center items-center h-14 bg-primary text-white text-lg rounded-xl shadow-lg hover:shadow-2xl hover:shadow-blue-200/50 dark:hover:shadow-blue-900/50 transform hover:scale-[1.02] transition-all duration-300 group/btn relative overflow-hidden mobile-form-button"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-3">
                       Apply Now ✨

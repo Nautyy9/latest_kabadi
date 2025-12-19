@@ -38,9 +38,9 @@ export default function Careers() {
       <main>
         <SectionInView>
           <section className="relative py-20 overflow-visible">
-          <div className="absolute inset-0 -top-12  bg-gradient-to-b from-green-50 via-green-50/60  -z-10 pointer-events-none"></div>
+          <div className="absolute inset-x-0 -top-24 bottom-0 bg-gradient-to-b from-green-50 via-green-50/60 to-transparent -z-10 pointer-events-none"></div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6">Join Our Team</h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">Join Our Green Mission</h1>
             <p className="text-xl text-muted-foreground">
               Build your career while making a positive impact on the environment
             </p>

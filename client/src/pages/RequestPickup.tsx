@@ -11,7 +11,7 @@ export default function RequestPickup() {
     <PageTransition className="min-h-screen">
       <Header />
       <main>
-        <section className="py-16 lg:py-20">
+        <section id="pickup-form-top" className="py-16 lg:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <MultiStepPickupForm />
           </div>

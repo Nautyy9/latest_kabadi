@@ -1,10 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertPickupRequestSchema, insertContactMessageSchema, insertCareerApplicationSchema } from "@shared/schema";
+import { insertPickupRequestSchema, insertContactMessageSchema, insertCareerApplicationSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
 import { z } from "zod";
 import { pingDb } from "./db/drizzle";
 import { register as metricsRegister, httpRequestDuration } from './metrics';
+import rateLimit from 'express-rate-limit';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Metrics endpoint (Prometheus)
@@ -134,6 +135,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Newsletter Subscription API
+  const newsletterLimiter = rateLimit({ windowMs: 60 * 1000, max: 10 });
+  app.post("/api/newsletter-subscriptions", newsletterLimiter, async (req, res) => {
+    try {
+      const validated = insertNewsletterSubscriptionSchema.parse(req.body);
+      const created = await storage.createNewsletterSubscription({ email: validated.email });
+
+      if ((validated as any).botField) {
+        return res.status(201).json(created);
+      }
+
+      // Optional: send a confirmation email (double opt-in could be implemented here)
+      // Skipping email to avoid sending unsolicited email without explicit opt-in workflow.
+
+      res.status(201).json(created);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid email address", details: error.errors });
+      } else {
+        console.error('[api] newsletter subscribe failed:', (error as any)?.stack || error);
+        res.status(500).json({ error: "Failed to subscribe" });
+      }
+    }
+  });
+
   // Career Application API
   app.post("/api/career-applications", async (req, res) => {
     try {
@@ -205,6 +231,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           position: 'Recycling Specialist',
           coverLetter: 'I care deeply about sustainability and process.',
           cvFileName: 'resume.pdf',
+        });
+
+        const newsletter = await storage.createNewsletterSubscription({
+          email: 'subscriber@test.com'
         });
 
         import('./mailer')

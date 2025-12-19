@@ -17,7 +17,7 @@ interface TestimonialCardProps {
 
 function TestimonialCard({ name, location, rating, text, image }: TestimonialCardProps) {
   return (
-    <Card className="p-6 h-60 w-fit hover-elevate">
+    <Card className="p-6 min-h-60 w-fit hover-elevate">
       <div className="flex gap-1 mb-4">
         {[...Array(5)].map((_, i) => (
           <Star key={i} className={cn("h-5 w-5 stroke-amber-500  text-amber-500", i<rating ? "fill-amber-500" : "fill-white")} />
@@ -72,7 +72,7 @@ export default function TestimonialsSection() {
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div className="text-center mb-12" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
-          <h2 className="mb-4">What Our Customers Say</h2>
+          <h2 className="text-4xl lg:text-5xl mb-4">What Our Customers Say</h2>
           <p className="text-xl text-muted-foreground">
             Join thousands of satisfied customers
           </p>

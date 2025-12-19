@@ -8,10 +8,22 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
+import {motion} from "framer-motion"
+type formType = {
+  name : string ,
+    email: string ,
+    phone: string ,
+    subject: string ,
+    message: string ,
+    botField?: string ,
+}
+
+const sectionVariants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } } as const;
+
 
 export default function ContactSection() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formType>({
     name: "",
     email: "",
     phone: "",
@@ -98,7 +110,7 @@ export default function ContactSection() {
         phone: '',
         subject: '',
         message: '',
-      });
+      }) 
       setErrors({
         name: false,
         email: false,
@@ -116,10 +128,15 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="bg-white dark:bg-slate-950">
+    <section className="py-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-        </div>
+            <motion.div className="text-center mb-16" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+                    <h2 className="text-4xl md:text-5xl mb-4">Contact Us</h2>
+                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                      Comprehensive solutions for all your scrap needs - trusted by thousands for quality, professionalism, and fair rates
+                    </p>
+                  </motion.div>
+      
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           <div className="lg:col-span-2">
             <div className="space-y-6">
@@ -168,15 +185,15 @@ export default function ContactSection() {
           <div className="lg:col-span-3 bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-3xl border-green-200/50 border">
             <div className="relative group">
               {/* Animated background with glassmorphism */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
+              <div className="hidden min-[500px]:block absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
+              <div className="hidden min-[500px]:block absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
               
               {/* Floating particles */}
               <div className="absolute top-6 right-12 w-2 h-2 bg-green-400/30 rounded-full animate-pulse"></div>
               <div className="absolute bottom-16 left-8 w-1 h-1 bg-blue-400/40 rounded-full animate-ping"></div>
               <div className="absolute top-24 left-16 w-1.5 h-1.5 bg-green-300/20 rounded-full animate-bounce"></div>
               
-              <Card className="relative z-10 p-10 shadow-xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden">
+              <Card className="relative z-10 min-[500px]:p-10 bg-transparent shadow-none min-[500px]:shadow-xl  min-[500px]:bg-white/95 dark:min-[500px]:bg-slate-900/95 backdrop-blur-0 min-[500px]:backdrop-blur-md border-0 rounded-2xl overflow-hidden">
                 {/* Header with animated gradient */}
                 <div className="text-center mb-8">
                   <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-3">

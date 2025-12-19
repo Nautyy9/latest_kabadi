@@ -12,14 +12,17 @@ export type SectionInViewProps = PropsWithChildren<{
   amount?: number;
 }>;
 
-export default function SectionInView({ children, className, once = true, amount = 0.4 }: SectionInViewProps) {
+export default function SectionInView({ children, className, once = true, amount }: SectionInViewProps) {
+  // Use responsive amount: lower threshold on mobile, higher on desktop
+  const responsiveAmount = amount ?? (typeof window !== 'undefined' && window.innerWidth < 768 ? 0.1 : 0.3);
+  
   return (
     <motion.div
       className={className}
       variants={defaultVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, amount }}
+      viewport={{ once, amount: responsiveAmount }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {children}

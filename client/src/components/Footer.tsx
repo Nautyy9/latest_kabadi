@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Leaf, Mail, Phone, MapPin } from "lucide-react";
 import { SiFacebook, SiX, SiInstagram, SiLinkedin } from "react-icons/si";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,24 @@ export default function Footer() {
     e.preventDefault();
     console.log("Newsletter signup:", email);
     setEmail("");
+  };
+
+  const [, navigate] = useLocation();
+
+  const gotoService = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.location.pathname === "/services") {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", `#${id}`);
+      } else {
+        // fallback: navigate so Services can scroll on mount
+        navigate(`/services#${id}`);
+      }
+    } else {
+      navigate(`/services#${id}`);
+    }
   };
 
   return (
@@ -116,16 +134,16 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-4">Our Services</h3>
             <ul className="space-y-2 text-muted-foreground">
               <li>
-                <Link href="/services#service-vehicle-scrapping" className="hover:text-foreground transition-colors">Vehicle Scrapping</Link>
+                <a href="/services#service-vehicle-scrapping" onClick={gotoService('service-vehicle-scrapping')} className="hover:text-foreground transition-colors">Vehicle Scrapping</a>
               </li>
               <li>
-                <Link href="/services#service-zero-waste-society" className="hover:text-foreground transition-colors">Zero Waste Society</Link>
+                <a href="/services#service-zero-waste-society" onClick={gotoService('service-zero-waste-society')} className="hover:text-foreground transition-colors">Zero Waste Society</a>
               </li>
               <li>
-                <Link href="/services#service-paper-shredding" className="hover:text-foreground transition-colors">Paper Shredding</Link>
+                <a href="/services#service-paper-shredding" onClick={gotoService('service-paper-shredding')} className="hover:text-foreground transition-colors">Paper Shredding</a>
               </li>
               <li>
-                <Link href="/services#service-dismantling-services" className="hover:text-foreground transition-colors">Dismantling Services</Link>
+                <a href="/services#service-dismantling-services" onClick={gotoService('service-dismantling-services')} className="hover:text-foreground transition-colors">Dismantling Services</a>
               </li>
             </ul>
           </div>

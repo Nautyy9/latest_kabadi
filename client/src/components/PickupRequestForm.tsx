@@ -8,9 +8,24 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
+
+type formType = {
+  name: string,
+  email: string,
+  phone: string,
+  address: string,
+  scrapTypes: Array<string>,
+  estimatedQuantity: string,
+  additionalNotes: string,
+  botField? : string,
+}
+
+
+
+
 export default function PickupRequestForm() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formType>({
     name: "",
     email: "",
     phone: "",
@@ -81,7 +96,7 @@ export default function PickupRequestForm() {
       <div className="absolute inset-0  bg-gradient-to-b from-green-100"></div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="mb-4">Request a Pickup</h2>
+          <h1 className="text-5xl md:text-6xl mb-4">Request a Pickup</h1>
           <p className="text-xl text-muted-foreground">
             Fill out the form below and we'll collect your scrap within 24 hours
           </p>

@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&display=swap');
+@import './styles/mobile-forms.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import mobile form optimizations */
 
 /* LIGHT MODE */
 :root {
@@ -236,6 +239,41 @@
 }
 
 @layer base {
+  /* Header special animations */
+  @keyframes curtain-hide {
+    0% { clip-path: inset(0% 0% 0% 0%); opacity: 1; }
+    100% { clip-path: inset(0% 0% 100% 0%); opacity: 0; }
+  }
+  .animate-curtain-hide {
+    animation: curtain-hide 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes drop-in {
+    0% { transform: translateY(-8px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  .animate-drop-in {
+    animation: drop-in 300ms ease-out both;
+  }
+
+  /* New: left/right curtain overlays and slow fade-in */
+  @keyframes slide-in-left {
+    0% { transform: translateX(-75%); opacity: 0; }
+    100% { transform: translateX(0%); opacity: 1; }
+  }
+  @keyframes slide-in-right {
+    0% { transform: translateX(75%); opacity: 0.7; }
+    100% { transform: translateX(0%); opacity: 1; }
+  }
+  .animate-slide-in-left { animation: slide-in-left 1500ms ease-in normal; }
+  .animate-slide-in-right { animation: slide-in-right 1500ms ease-in normal; }
+
+  @keyframes fade-in-slow {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .animate-fade-in-slow { animation: fade-in-slow 1000ms ease-out forwards; }
+}
   :root {
     --kabadi-green-primary: #00C753;    /* For subtitles/highlighting */
     --kabadi-green-emphasis: #15803D;   /* For emphasized text */
@@ -391,7 +429,7 @@
   .animate-fade-in-delayed-3 { animation: fade-in-delayed-3 2.5s ease-out forwards; }
   .animate-slide-up { animation: slide-up 1.2s ease-out forwards; }
   .animate-bounce-left { animation: bounce-left 1s ease-in-out infinite; }
-}
+
 
 /**
  * Using the elevate system.
