@@ -24,17 +24,17 @@ const listItem = {
 export default function EcoFriendlySection() {
   const benefits = [
     {
-      icon: <Leaf className="h-8 w-8 text-primary" />,
+      icon: <Leaf className="h-6 w-6 text-primary" />,
       title: "Environmental Impact",
       description: "Reducing waste and carbon footprint through systematic recycling",
     },
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
+      icon: <Users className="h-6 w-6 text-primary" />,
       title: "Community Engagement",
       description: "Bringing communities together for a sustainable future",
     },
     {
-      icon: <TrendingUp className="h-8 w-8 text-primary" />,
+      icon: <TrendingUp className="h-6 w-6 text-primary" />,
       title: "Sustainable Growth",
       description: "Building a circular economy that benefits everyone",
     },
@@ -62,9 +62,9 @@ export default function EcoFriendlySection() {
               {benefits.map((benefit) => (
                 <motion.div key={benefit.description} variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 1 }} >
                   <Card key={benefit.title} className="p-6 bg-white border-l-2 border-l-green-500">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-start gap-4">
                     <div className=" p-3 rounded-lg flex-shrink-0">
-                      <div className="text-kabadi-primary">
+                      <div className="border border-green-300 dark:border-green-600 bg-kabadi-light p-3 rounded-lg text-kabadi-primary">
                         {benefit.icon}
                       </div>
                     </div>

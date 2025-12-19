@@ -7,7 +7,6 @@ import {
   type InsertCareerApplication,
   type NewsletterSubscription,
   type InsertNewsletterSubscription,
-  newsletterSubscriptions,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -86,6 +85,8 @@ export class MemStorage implements IStorage {
       id,
       coverLetter: insertApplication.coverLetter ?? null,
       cvFileName: insertApplication.cvFileName ?? null,
+      resumeStoragePath: (insertApplication as any).resumeStoragePath ?? null,
+      resumeUrl: (insertApplication as any).resumeUrl ?? null,
       createdAt: new Date(),
     };
     this.careerApplications.set(id, application);

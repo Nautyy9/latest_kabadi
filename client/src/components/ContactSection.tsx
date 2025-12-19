@@ -139,48 +139,54 @@ export default function ContactSection() {
       
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           <div className="lg:col-span-2">
-            <div className="space-y-6">
+            <motion.div className="space-y-6" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}>
               <h3 className="text-2xl font-semibold text-foreground mb-6">Reach Out to Us</h3>
-              <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                
-                <div className="flex gap-4 items-start">
-                  <div className="bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Mail className="h-6 w-6 text-kabadi-primary" />
+              <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                  
+                  <div className="flex gap-4 items-start">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-6 w-6 text-kabadi-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Email Us</h4>
+                      <p className="text-muted-foreground">contact@thekabadi.com</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Email Us</h4>
-                    <p className="text-muted-foreground">contact@thekabadi.com</p>
+                </Card>
+              </motion.div>
+              <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                  
+                  <div className="flex gap-4 items-start">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Phone className=" h-6 w-6 text-kabadi-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Call Us</h4>
+                      <p className="text-muted-foreground">+91 98765 43210</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
-              <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                
-                <div className="flex gap-4 items-start">
-                  <div className="bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-6 w-6 text-kabadi-primary" />
+                </Card>
+              </motion.div>
+              <motion.div variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
+                  
+                  <div className="flex gap-4 items-start">
+                    <div className="border border-green-300 dark:border-green-600 bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="h-6 w-6 text-kabadi-primary" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground">Visit Us</h4>
+                      <p className="text-muted-foreground">1234 Green Street, Recycling Hub, Mumbai, India - 100001</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Call Us</h4>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
-                  </div>
-                </div>
-              </Card>
-              <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
-                
-                <div className="flex gap-4 items-start">
-                  <div className="bg-kabadi-light w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-6 w-6 text-kabadi-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground">Visit Us</h4>
-                    <p className="text-muted-foreground">1234 Green Street, Recycling Hub, Mumbai, India - 100001</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
+                </Card>
+              </motion.div>
+            </motion.div>
           </div>
           <div className="lg:col-span-3 bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-3xl border-green-200/50 border">
             <div className="relative group">

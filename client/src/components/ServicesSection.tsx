@@ -12,7 +12,7 @@ interface ServiceCardProps {
 
 function ServiceCard({ icon, title, description }: ServiceCardProps) {
   return (
-    <Card className="p-8 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2 border-l-4  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
+    <Card className="p-6 group relative hover:bg-gradient-to-r hover:from-green-50/80 hover:to-blue-50/80 transform transition-all duration-700 bg-white border-2 border-l-4  border-slate-200 border-l-primary   hover:border-green-200/50  overflow-hidden">
                 <div className="absolute inset-0 -translate-x-full group-hover/btn:scale-110 group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-transform duration-700 pointer-events-none"></div>
                   <div className="bg-kabadi-light w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-green-300 dark:border-green-600">
         <div className="text-kabadi-primary">
@@ -76,7 +76,7 @@ export default function ServicesSection() {
         </motion.div>
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-6" variants={listContainer} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
           {services.map((service) => (
-            <motion.div key={service.title} variants={listItem} transition={{ duration: 0.4, ease: "easeOut" }}>
+            <motion.div key={service.title} variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.8 }} transition={{ duration: 0.6, ease: "easeOut" }}>
               <ServiceCard {...service} />
             </motion.div>
           ))}

@@ -32,6 +32,8 @@ export const careerApplications = pgTable("career_applications", {
   position: text("position").notNull(),
   coverLetter: text("cover_letter"),
   cvFileName: text("cv_file_name"),
+  resumeStoragePath: text("resume_storage_path"),
+  resumeUrl: text("resume_url"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -63,6 +65,8 @@ export const insertCareerApplicationSchema = z.object({
   position: z.string().trim().min(2).max(100),
   coverLetter: z.string().trim().max(5000).optional().nullable(),
   cvFileName: z.string().trim().max(255).optional().nullable(),
+  resumeStoragePath: z.string().trim().max(512).optional().nullable(),
+  resumeUrl: z.string().trim().url().max(1024).optional().nullable(),
   botField: z.string().max(0).optional(),
 });
 

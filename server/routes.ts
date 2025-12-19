@@ -6,6 +6,10 @@ import { z } from "zod";
 import { pingDb } from "./db/drizzle";
 import { register as metricsRegister, httpRequestDuration } from './metrics';
 import rateLimit from 'express-rate-limit';
+import multer from 'multer';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import path from 'path';
+import crypto from 'crypto';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Metrics endpoint (Prometheus)
@@ -160,11 +164,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Career Application API
-  app.post("/api/career-applications", async (req, res) => {
+  // Career Application API (multipart or JSON)
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      const allowed = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ];
+      if (!allowed.includes(file.mimetype)) {
+        return cb(new Error('Unsupported file type'));
+      }
+      cb(null, true);
+    }
+  });
+
+  const s3 = new S3Client({
+    endpoint: process.env.S3_ENDPOINT,
+    region: process.env.S3_REGION || 'us-east-1',
+    forcePathStyle: true,
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY || '',
+      secretAccessKey: process.env.S3_SECRET_KEY || '',
+    },
+  });
+
+  app.post("/api/career-applications", upload.single('resume'), async (req, res) => {
     try {
-      const validatedData = insertCareerApplicationSchema.parse(req.body);
-      const application = await storage.createCareerApplication(validatedData);
+      // Parse fields regardless of content-type
+      const body: any = req.body || {};
+      const basePayload = {
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+        position: body.position,
+        coverLetter: body.coverLetter || null,
+        cvFileName: body.cvFileName || null,
+        botField: body.botField,
+      };
+
+      // Validate basic fields first
+      const validatedData = insertCareerApplicationSchema.parse(basePayload);
+
+      let resumeStoragePath: string | null = null;
+      let resumeUrl: string | null = null;
+      let cvFileName = validatedData.cvFileName || null;
+
+      // If a file is attached, upload to S3 (Supabase Storage)
+      if (req.file && req.file.buffer && process.env.S3_BUCKET && process.env.S3_ENDPOINT) {
+        const ext = path.extname(req.file.originalname).toLowerCase() || '.bin';
+        const today = new Date();
+        const key = `resumes/${today.getFullYear()}/${String(today.getMonth()+1).padStart(2,'0')}/${String(today.getDate()).padStart(2,'0')}/${crypto.randomUUID()}${ext}`;
+        const bucket = process.env.S3_BUCKET as string;
+        await s3.send(new PutObjectCommand({
+          Bucket: bucket,
+          Key: key,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        }));
+        resumeStoragePath = `${bucket}/${key}`;
+        cvFileName = req.file.originalname;
+        // Build a public URL if using Supabase public bucket
+        const supabaseBase = process.env.SUPABASE_PUBLIC_URL;
+        if (supabaseBase) {
+          // expected: https://<project>.supabase.co
+          resumeUrl = `${supabaseBase}/storage/v1/object/public/${bucket}/${key}`;
+        }
+      }
+
+      const application = await storage.createCareerApplication({
+        ...validatedData,
+        cvFileName: cvFileName,
+        resumeStoragePath,
+        resumeUrl,
+      } as any);
 
       if ((validatedData as any).botField) {
         return res.status(201).json(application);
@@ -187,7 +262,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.status(400).json({ error: "Invalid application data", details: error.errors });
       } else {
         console.error('[api] create application failed:', (error as any)?.stack || error);
-        res.status(500).json({ error: "Failed to submit application" });
+        res.status(500).json({ error: (error as any)?.message || "Failed to submit application" });
       }
     }
   });
