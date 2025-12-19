@@ -69,7 +69,7 @@ export default function ServicesSection() {
     <section className="py-20   dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-12">
         <motion.div className="text-center mb-16" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
-          <h2 className="mb-4">Our Services</h2>
+          <h2 className="text-4xl md:text-5xl mb-4">Our Services</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Comprehensive solutions for all your scrap needs - trusted by thousands for quality, professionalism, and fair rates
           </p>

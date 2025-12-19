@@ -137,7 +137,7 @@ export default function CareerSection() {
     <section className="py-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mobile-form-container">
         <div className="text-center mb-12">
-          <h2 className="mb-4">Join Our Green Mission</h2>
+          <h2 className=" text-4xl md:text-5xl mb-4">Join Our Green Mission</h2>
           <p className="text-xl text-muted-foreground">
             Be part of a team that's making a difference for the environment
           </p>

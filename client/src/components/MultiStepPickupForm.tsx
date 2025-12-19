@@ -20,12 +20,12 @@ interface ScrapType {
 }
 
 const scrapTypes: ScrapType[] = [
-  { id: "plastic", name: "Plastic", rate: 20, icon: <Recycle className="h-6 w-6 stroke-primary" /> },
-  { id: "metal", name: "Metal", rate: 40, icon: <Wrench className="h-6 w-6 stroke-primary" /> },
-  { id: "paper", name: "Paper", rate: 12, icon: <FileText className="h-6 w-6 stroke-primary" /> },
-  { id: "cardboard", name: "Cardboard", rate: 15, icon: <Box className="h-6 w-6 stroke-primary" /> },
-  { id: "electronics", name: "Electronics", rate: 35, icon: <Smartphone className="h-6 w-6 stroke-primary" /> },
-  { id: "glass", name: "Glass", rate: 8, icon: <Lightbulb className="h-6 w-6 stroke-primary" /> },
+  { id: "plastic", name: "Plastic", rate: 20, icon: <Recycle className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "metal", name: "Metal", rate: 40, icon: <Wrench className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "paper", name: "Paper", rate: 12, icon: <FileText className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "cardboard", name: "Cardboard", rate: 15, icon: <Box className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "electronics", name: "Electronics", rate: 35, icon: <Smartphone className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
+  { id: "glass", name: "Glass", rate: 8, icon: <Lightbulb className="h-8 w-8 sm:h-6 sm:w-6 stroke-primary" /> },
 ];
 
 export default function MultiStepPickupForm() {
@@ -185,7 +185,7 @@ export default function MultiStepPickupForm() {
        {/* Honey-pot field to catch bots */}
        <input type="text" name="botField" autoComplete="off" tabIndex={-1} value={formData.botField} onChange={(e)=>setFormData({...formData, botField: e.target.value})} className="hidden" aria-hidden="true" />
         <div className="text-center mb-12">
-          <h2 className="text-5xl lg:text-6xl font-bold  mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold  mb-4">
             Request a Pickup 🚛
           </h2>
           <p className="text-xl text-muted-foreground">

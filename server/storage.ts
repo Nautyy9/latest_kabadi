@@ -5,6 +5,9 @@ import {
   type InsertContactMessage,
   type CareerApplication,
   type InsertCareerApplication,
+  type NewsletterSubscription,
+  type InsertNewsletterSubscription,
+  newsletterSubscriptions,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -15,10 +18,12 @@ export interface IStorage {
   getContactMessages(): Promise<ContactMessage[]>;
   createCareerApplication(application: InsertCareerApplication): Promise<CareerApplication>;
   getCareerApplications(): Promise<CareerApplication[]>;
+  createNewsletterSubscription(sub: InsertNewsletterSubscription): Promise<NewsletterSubscription>;
+  getNewsletterSubscriptions(): Promise<NewsletterSubscription[]>;
 }
 
-import { pickupRequests, contactMessages, careerApplications } from '@shared/schema';
-import { desc } from 'drizzle-orm';
+import { pickupRequests, contactMessages, careerApplications, newsletterSubscriptions } from '@shared/schema';
+import { desc, eq } from 'drizzle-orm';
 
 async function getDb() {
   const mod = await import('./db/drizzle');
@@ -30,11 +35,15 @@ export class MemStorage implements IStorage {
   private pickupRequests: Map<string, PickupRequest>;
   private contactMessages: Map<string, ContactMessage>;
   private careerApplications: Map<string, CareerApplication>;
+  private newsletterSubscriptions: Map<string, NewsletterSubscription>;
+  private newsletterByEmail: Map<string, NewsletterSubscription>;
 
   constructor() {
     this.pickupRequests = new Map();
     this.contactMessages = new Map();
     this.careerApplications = new Map();
+    this.newsletterSubscriptions = new Map();
+    this.newsletterByEmail = new Map();
   }
 
   async createPickupRequest(insertRequest: InsertPickupRequest): Promise<PickupRequest> {
@@ -85,6 +94,24 @@ export class MemStorage implements IStorage {
 
   async getCareerApplications(): Promise<CareerApplication[]> {
     return Array.from(this.careerApplications.values());
+  }
+
+  async createNewsletterSubscription(insertSub: InsertNewsletterSubscription): Promise<NewsletterSubscription> {
+    const existing = this.newsletterByEmail.get(insertSub.email.toLowerCase());
+    if (existing) return existing;
+    const id = randomUUID();
+    const sub: NewsletterSubscription = {
+      id,
+      email: insertSub.email,
+      createdAt: new Date(),
+    };
+    this.newsletterSubscriptions.set(id, sub);
+    this.newsletterByEmail.set(insertSub.email.toLowerCase(), sub);
+    return sub;
+  }
+
+  async getNewsletterSubscriptions(): Promise<NewsletterSubscription[]> {
+    return Array.from(this.newsletterSubscriptions.values());
   }
 }
 
@@ -164,6 +191,25 @@ class DbStorage implements IStorage {
     const rows = await db.select().from(careerApplications).orderBy(desc(careerApplications.createdAt));
     return rows as CareerApplication[];
   }
+
+  async createNewsletterSubscription(insertSub: InsertNewsletterSubscription): Promise<NewsletterSubscription> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
+    const existing = await db.select().from(newsletterSubscriptions).where(eq(newsletterSubscriptions.email, insertSub.email));
+    if (existing.length > 0) return existing[0] as NewsletterSubscription;
+    const [row] = await db
+      .insert(newsletterSubscriptions)
+      .values({ email: insertSub.email })
+      .returning();
+    return row as NewsletterSubscription;
+  }
+
+  async getNewsletterSubscriptions(): Promise<NewsletterSubscription[]> {
+    const db = await getDb();
+    if (!db) throw new Error('DB unavailable');
+    const rows = await db.select().from(newsletterSubscriptions).orderBy(desc(newsletterSubscriptions.createdAt));
+    return rows as NewsletterSubscription[];
+  }
 }
 
 class HybridStorage implements IStorage {
@@ -223,6 +269,20 @@ class HybridStorage implements IStorage {
     return this.withFallback(
       () => this.dbStore.getCareerApplications(),
       () => this.memStore.getCareerApplications(),
+    );
+  }
+
+  createNewsletterSubscription(sub: InsertNewsletterSubscription) {
+    return this.withFallback(
+      () => this.dbStore.createNewsletterSubscription(sub),
+      () => this.memStore.createNewsletterSubscription(sub),
+    );
+  }
+
+  getNewsletterSubscriptions() {
+    return this.withFallback(
+      () => this.dbStore.getNewsletterSubscriptions(),
+      () => this.memStore.getNewsletterSubscriptions(),
     );
   }
 }

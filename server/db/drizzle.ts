@@ -3,8 +3,13 @@ import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 
 // Lazily initialize DB so the app can boot without DATABASE_URL (Render envs, local dev)
-const dbUrl = process.env.DATABASE_URL;
+let dbUrl = process.env.DATABASE_URL;
 let client: ReturnType<typeof postgres> | null = null;
+
+// In development, relax SSL verification if sslmode=require is present; this avoids local cert issues
+if (process.env.NODE_ENV !== 'production' && dbUrl && dbUrl.includes('sslmode=require')) {
+  dbUrl = dbUrl.replace('sslmode=require', 'sslmode=no-verify');
+}
 
 if (dbUrl) {
   client = postgres(dbUrl, {

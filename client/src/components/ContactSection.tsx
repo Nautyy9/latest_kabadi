@@ -8,7 +8,7 @@ import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
-
+import {motion} from "framer-motion"
 type formType = {
   name : string ,
     email: string ,
@@ -17,6 +17,9 @@ type formType = {
     message: string ,
     botField?: string ,
 }
+
+const sectionVariants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } } as const;
+
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -125,10 +128,15 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="bg-white dark:bg-slate-950">
+    <section className="py-20 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-        </div>
+            <motion.div className="text-center mb-16" variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, ease: "easeOut" }}>
+                    <h2 className="text-4xl md:text-5xl mb-4">Contact Us</h2>
+                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                      Comprehensive solutions for all your scrap needs - trusted by thousands for quality, professionalism, and fair rates
+                    </p>
+                  </motion.div>
+      
         <div className="grid lg:grid-cols-5 gap-8 items-start">
           <div className="lg:col-span-2">
             <div className="space-y-6">

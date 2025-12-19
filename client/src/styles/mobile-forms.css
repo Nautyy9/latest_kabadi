@@ -209,7 +209,12 @@
   }
 
   .mobile-scrap-icon {
-    @apply w-8 h-8 mb-2;
+    @apply w-10 h-10 mb-2;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .mobile-scrap-name {

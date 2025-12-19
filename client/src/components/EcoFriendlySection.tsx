@@ -44,7 +44,7 @@ export default function EcoFriendlySection() {
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="mb-6">
+          <h2 className="text-4xl md:text-5xl mb-6">
             Making Society Eco-Friendly
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -60,7 +60,7 @@ export default function EcoFriendlySection() {
             </p>
             <motion.div className="grid gap-4"  >
               {benefits.map((benefit) => (
-                <motion.div variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 1 }} >
+                <motion.div key={benefit.description} variants={listItem} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 1 }} >
                   <Card key={benefit.title} className="p-6 bg-white border-l-2 border-l-green-500">
                   <div className="flex items-start gap-4">
                     <div className=" p-3 rounded-lg flex-shrink-0">

@@ -16,12 +16,12 @@ export default function HeroSection() {
     
     <section className="relative overflow-visible">
       {/* Extended gradient background that covers header area but stays within hero section */}
-      <div className="absolute inset-x-0 -top-12 bottom-0 bg-gradient-to-b from-green-50 via-green-50/30 to-transparent -z-10 pointer-events-none"></div>
+      <div className="absolute inset-x-0 -top-24 md:-top-24 bottom-0 bg-gradient-to-b from-green-50 via-green-50/30 to-transparent -z-10 pointer-events-none"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content Section */}
           <div className="space-y-6 lg:order-1">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight">
               Sell Your Scrap at{" "}
               <span className="text-primary">Fair Rates</span> From Home
             </h1>
@@ -38,7 +38,7 @@ export default function HeroSection() {
             </div>
             
             {/* Feature Section - Clean Column Layout */}
-            <div className="flex flex-wrap justify-between min-[800px]:justify-start gap-6  py-4">
+            <div className="flex flex-wrap justify-between min-[900px]:justify-around lg:justify-start gap-6  py-4">
               <div className="flex items-center gap-3">
                 <div className="bg-primary/10 p-3 rounded-lg border border-primary-border dark:border-primary-border/10">
                   <Leaf className="text-primary h-6 w-6 stroke-[1.5]" />

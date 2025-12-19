@@ -74,3 +74,18 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 
 export type InsertCareerApplication = z.infer<typeof insertCareerApplicationSchema>;
 export type CareerApplication = typeof careerApplications.$inferSelect;
+
+// Newsletter subscriptions
+export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
+  id: varchar("id").primaryKey().default(sql`uuid_generate_v4()`),
+  email: text("email").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertNewsletterSubscriptionSchema = z.object({
+  email: z.string().trim().email().max(200),
+  botField: z.string().max(0).optional(),
+});
+
+export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
+export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;

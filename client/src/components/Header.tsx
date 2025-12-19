@@ -115,7 +115,17 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [introDone, setIntroDone] = useState(false);
+  const [initialWhiteDone, setInitialWhiteDone] = useState(false);
   const headerRef = useRef<HTMLHeadElement>(null);
+
+  // Determine md+ background style purely via Tailwind responsive classes
+  const mdSolidBg = isScrolled || !initialWhiteDone;
+
+  // Keep header solid white for first 1s, then allow translucent when not scrolled
+  useEffect(() => {
+    const t = setTimeout(() => setInitialWhiteDone(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
 
   // Handle scroll to change header background
   useEffect(() => {
@@ -145,17 +155,21 @@ export default function Header() {
   };
 
 
+  // Tailwind-only responsive background: translucent on <md before scroll, white after scroll
+  const baseBgClass = isScrolled ? 'bg-white' : 'bg-white/10';
+  const baseBackdropClass = isScrolled ? '' : 'backdrop-blur-sm';
+  const mdBgClass = isScrolled ? 'md:bg-white' : (initialWhiteDone ? 'md:bg-white/10' : 'md:bg-white lg:md:bg-white/10');
+
   return (
     <motion.header 
       initial={false}
-      animate={{ backgroundColor: introDone ? (isScrolled ? "white" : "rgba(255,255,255,1)") : "white" }}
       transition={{ duration: 0.4, ease: easeOut }}
       ref={headerRef} 
-      className="sticky top-0 z-50 backdrop-blur-md border-b border-b-white/10 transition-colors duration-300"
+      className={`sticky top-0 z-50 ${baseBgClass} ${baseBackdropClass} border-0 md:backdrop-blur-md md:border-b md:border-b-white/10 transition-colors duration-300 ${mdBgClass}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top row: logo left, CTA right, with centered glass nav on lg+ */}
-        <div className="relative flex items-center justify-between gap-3 py-2 min-h-16">
+        <div className="relative flex items-center justify-between gap-3 py-2 min-h-16 [&>*:nth-child(2)]:hidden [&>*:nth-child(2)]:md:flex [&>*:nth-child(2)]:lg:hidden [&>*:nth-child(3)]:hidden [&>*:nth-child(3)]:lg:flex">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 hover-elevate active-elevate-2 -ml-2 px-2 py-1 rounded-md flex-shrink-0">
             <div className="h-12 w-auto flex items-center overflow-hidden flex-shrink-0">
@@ -165,9 +179,25 @@ export default function Header() {
           </Link>
 
           {/* Center interactive center area (md+): intro links -> curtain hide -> two-bar hamburger */}
-          <InteractiveCenter onIntroEnd={() => setIntroDone(true)} />
-
+          
+          <InteractiveCenter  onIntroEnd={() => setIntroDone(true)} />
+          
           {/* Right CTA (visible from md up), fallback to menu in mobile) */}
+        
+            <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <Button
+                  variant="ghost"
+                  className={isActive(link.href) ? "bg-gradient-to-b from-primary/10  dark:bg-slate-700 text-slate-800 dark:text-slate-100 border border-primary-border dark:border-green-200/50" : ""}
+                  data-testid={`link-${link.label.toLowerCase()}`}
+                >
+                  {link.label}
+                </Button>
+              </Link>
+            ))}
+          </nav>
+            
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
             <Link href="/request-pickup">
               <Button className="shadow-sm" data-testid="button-request-pickup">
@@ -176,6 +206,7 @@ export default function Header() {
               </Button>
             </Link>
           </div>
+        
 
           {/* Mobile/Tablet menu button */}
           <Sheet>
