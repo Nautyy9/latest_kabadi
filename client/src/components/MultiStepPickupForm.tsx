@@ -34,8 +34,13 @@ export default function MultiStepPickupForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const cardRef = useRef<HTMLDivElement>(null);
 
+  const didMountRef = useRef(false);
   useEffect(() => {
-    // Keep form in view and avoid focus loss on step change
+    // Avoid auto-scrolling on initial page load; only scroll on user-driven step changes
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [currentStep]);
   const [selectedScrapTypes, setSelectedScrapTypes] = useState<string[]>([]);
