@@ -181,6 +181,8 @@ class DbStorage implements IStorage {
         position: insertApplication.position,
         coverLetter: insertApplication.coverLetter ?? null,
         cvFileName: insertApplication.cvFileName ?? null,
+        resumeStoragePath: (insertApplication as any).resumeStoragePath ?? null,
+        resumeUrl: (insertApplication as any).resumeUrl ?? null,
       })
       .returning();
     return row as CareerApplication;

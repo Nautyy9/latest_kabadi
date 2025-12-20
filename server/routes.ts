@@ -249,11 +249,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }));
         resumeStoragePath = `${bucket}/${key}`;
         cvFileName = req.file.originalname;
-        // Build a public URL if using Supabase public bucket
-        const supabaseBase = process.env.SUPABASE_PUBLIC_URL;
-        if (supabaseBase) {
-          // expected: https://<project>.supabase.co
-          resumeUrl = `${supabaseBase}/storage/v1/object/public/${bucket}/${key}`;
+
+        // URL strategy:
+        // - If SUPABASE_PUBLIC_URL is set and bucket is public, build a public URL
+        // - Else, if SUPABASE_URL and SUPABASE_SERVICE_ROLE exist, create a signed URL
+        const publicBase = process.env.SUPABASE_PUBLIC_URL; // e.g. https://<project>.supabase.co
+        const supabaseUrl = process.env.SUPABASE_URL || publicBase;
+        const serviceKey = process.env.SUPABASE_SERVICE_ROLE;
+        const signedTtl = Number(process.env.SUPABASE_SIGNED_URL_TTL || '3600');
+
+        if (publicBase && process.env.SUPABASE_PUBLIC_BUCKET === 'true') {
+          // Public bucket URL
+          resumeUrl = `${publicBase}/storage/v1/object/public/${bucket}/${key}`;
+        } else if (supabaseUrl && serviceKey) {
+          // Private bucket: request signed URL via Supabase Storage API
+          try {
+            const resp = await fetch(`${supabaseUrl}/storage/v1/object/sign/${bucket}/${encodeURIComponent(key)}`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${serviceKey}`,
+                'apikey': serviceKey,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ expiresIn: signedTtl }),
+            });
+            if (resp.ok) {
+              const data: any = await resp.json();
+              // signedURL is a path; prefix with supabaseUrl
+              if (data?.signedURL) {
+                resumeUrl = `${supabaseUrl}${data.signedURL}`;
+              }
+            } else {
+              const txt = await resp.text();
+              console.warn('[storage] failed to sign URL:', resp.status, txt);
+            }
+          } catch (e: any) {
+            console.warn('[storage] error while signing URL:', e?.message || e);
+          }
         }
       }
 
