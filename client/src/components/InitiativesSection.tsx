@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import treePlantingImage from "@assets/generated_images/Community_tree_planting_initiative_d175b108.png";
-import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.png";
-import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.png";
+import treePlantingImage from "@assets/generated_images/Community_tree_planting_initiative_d175b108.webp";
+import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.webp";
+import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.webp";
 
 type InitiativeCardProps = {
   title: string;

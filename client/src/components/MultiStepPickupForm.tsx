@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import StepProgress from "@/components/StepProgress";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,6 +32,17 @@ const scrapTypes: ScrapType[] = [
 export default function MultiStepPickupForm() {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const didMountRef = useRef(false);
+  useEffect(() => {
+    // Avoid auto-scrolling on initial page load; only scroll on user-driven step changes
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
+    cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [currentStep]);
   const [selectedScrapTypes, setSelectedScrapTypes] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -208,7 +219,7 @@ export default function MultiStepPickupForm() {
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-2xl"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-slate-100/80 via-blue-50/60 to-green-50/40 dark:from-slate-800/80 dark:via-blue-950/60 dark:to-green-950/40 rounded-2xl backdrop-blur-sm"></div>
           
-          <Card className="relative z-10 p-10 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden mobile-form-card">
+          <Card ref={cardRef} className="relative z-10 p-10 shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-0 rounded-2xl overflow-hidden mobile-form-card min-h-[640px] sm:min-h-[560px] md:min-h-[600px]">
           {/* Step 1: Select Scrap Types */}
           {currentStep === 1 && (
             <div className="space-y-8">

@@ -181,6 +181,8 @@ class DbStorage implements IStorage {
         position: insertApplication.position,
         coverLetter: insertApplication.coverLetter ?? null,
         cvFileName: insertApplication.cvFileName ?? null,
+        resumeStoragePath: (insertApplication as any).resumeStoragePath ?? null,
+        resumeUrl: (insertApplication as any).resumeUrl ?? null,
       })
       .returning();
     return row as CareerApplication;
@@ -217,18 +219,35 @@ class HybridStorage implements IStorage {
   private dbStore = new DbStorage();
   private memStore = memStore;
   private preferDb = !!process.env.DATABASE_URL;
+  private lastDbError: string | null = null;
+  private lastProvider: 'db' | 'memory' = this.preferDb ? 'db' : 'memory';
 
   private async withFallback<T>(dbOp: () => Promise<T>, memOp: () => Promise<T>): Promise<T> {
     if (this.preferDb) {
       try {
-        return await dbOp();
+        const result = await dbOp();
+        this.lastProvider = 'db';
+        this.lastDbError = null;
+        return result;
       } catch (err: any) {
-        console.warn('[storage] DB operation failed; falling back to memory:', err?.message || err);
+        const msg = err?.message || String(err);
+        console.warn('[storage] DB operation failed; falling back to memory:', msg);
+        this.lastDbError = msg;
         this.preferDb = false;
+        this.lastProvider = 'memory';
         return memOp();
       }
     }
+    this.lastProvider = 'memory';
     return memOp();
+  }
+
+  public diagnostics() {
+    return {
+      preferDb: this.preferDb,
+      lastProvider: this.lastProvider,
+      lastDbError: this.lastDbError,
+    };
   }
 
   createPickupRequest(req: InsertPickupRequest) {
@@ -288,4 +307,4 @@ class HybridStorage implements IStorage {
   }
 }
 
-export const storage: IStorage = new HybridStorage();
+export const storage: IStorage & { diagnostics: () => { preferDb: boolean; lastProvider: 'db'|'memory'; lastDbError: string|null } } = new HybridStorage() as any;

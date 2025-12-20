@@ -28,6 +28,7 @@ export default function CareerSection() {
     botField: "",
   });
   const [fileName, setFileName] = useState("");
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [errors, setErrors] = useState({
     name: false,
     email: false,
@@ -54,10 +55,12 @@ export default function CareerSection() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setResumeFile(file);
       setFileName(file.name);
       setErrors(prev => ({ ...prev, file: false }));
       console.log("File selected:", file.name);
     } else {
+      setResumeFile(null);
       setErrors(prev => ({ ...prev, file: true }));
     }
   };
@@ -96,11 +99,22 @@ export default function CareerSection() {
         cvFileName: fileName || null,
         botField: formData.botField,
       };
+      // Build multipart form so the file actually uploads
+      const form = new FormData();
+      form.append('name', formData.name);
+      form.append('email', formData.email);
+      form.append('phone', formData.phone);
+      form.append('position', formData.position);
+      form.append('coverLetter', formData.coverLetter);
+      form.append('cvFileName', fileName || 'resume');
+      form.append('botField', formData.botField || '');
+      if (resumeFile) {
+        form.append('resume', resumeFile, resumeFile.name);
+      }
+
       const res = await fetch('/api/career-applications', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(payload),
+        body: form,
       });
       if (!res.ok) {
         const text = await res.text();

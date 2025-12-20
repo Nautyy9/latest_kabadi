@@ -1,8 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { motion, MotionAdvancedProps, MotionValue } from "framer-motion";
 import { Leaf, Users, TrendingUp } from "lucide-react";
-import communityImage from "@assets/generated_images/Eco-friendly_community_scene_51ba1731.png";
-import transformImage from "@assets/generated_images/Environmental_transformation_comparison_7b4030b9.png";
+import communityImage from "@assets/generated_images/Eco-friendly_community_scene_51ba1731.webp";
+import transformImage from "@assets/generated_images/Environmental_transformation_comparison_7b4030b9.webp";
 
 const leftVariants = {
   hidden: { opacity: 0, x: -24 },

@@ -3,9 +3,9 @@ import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import WhyChooseKabadi from "@/components/WhyChooseKabadi";
-import treePlantingImage from "@assets/generated_images/Community_tree_planting_initiative_d175b108.png";
-import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.png";
-import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.png";
+import treePlantingImage from "@assets/generated_images/Community_tree_planting_initiative_d175b108.webp";
+import educationImage from "@assets/generated_images/Recycling_education_workshop_initiative_c925daa6.webp";
+import waterCleanupImage from "@assets/generated_images/Water_body_cleanup_initiative_21b88d5c.webp";
 
 import PageTransition from "@/components/PageTransition";
 import SectionInView from "@/components/SectionInView";

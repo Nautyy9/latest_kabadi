@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, TrendingUp, Clock } from "lucide-react";
-import heroImage from "@assets/generated_images/Eco-friendly_scrap_collection_hero_8318ec83.png";
+import heroImage from "@assets/generated_images/Eco-friendly_scrap_collection_hero_8318ec83.webp";
 
 export default function HeroSection() {
   const scrollToPickup = () => {
