@@ -33,10 +33,12 @@ function InteractiveCenter({ onIntroEnd }: { onIntroEnd?: () => void }) {
 
 
   const quickLinks = [
+    { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
-    { href: "/rates", label: "Rates" },
     { href: "/initiatives", label: "Initiatives" },
+    { href: "/rates", label: "Rates" },
     { href: "/contact", label: "Contact" },
+    { href: "/careers", label: "Careers" },
   ];
 
   return (
