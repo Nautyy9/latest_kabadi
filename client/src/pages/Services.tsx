@@ -3,9 +3,9 @@ import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import WhyChooseKabadi from "@/components/WhyChooseKabadi";
-import vehicleImage from "@assets/generated_images/Vehicle_scrapping_service_facility_7aed18af.png";
-import zeroWasteImage from "@assets/generated_images/Zero_waste_eco-friendly_community_ea9c04d6.png";
-import paperImage from "@assets/generated_images/Professional_paper_shredding_service_2b5363e9.png";
+import vehicleImage from "@assets/generated_images/Vehicle_scrapping_service_facility_7aed18af.webp";
+import zeroWasteImage from "@assets/generated_images/Zero_waste_eco-friendly_community_ea9c04d6.webp";
+import paperImage from "@assets/generated_images/Professional_paper_shredding_service_2b5363e9.webp";
 
 import PageTransition from "@/components/PageTransition";
 import SectionInView from "@/components/SectionInView";

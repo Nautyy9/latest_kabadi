@@ -88,7 +88,7 @@ function InteractiveCenter({ onIntroEnd }: { onIntroEnd?: () => void }) {
           {/* Hover/pinned panel below header, narrower than top bar */}
           {(hoverOpen || pinnedOpen) && (
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[70vw] max-w-xl rounded-2xl bg-white text-slate-900 backdrop-blur-md p-3">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-6 gap-2">
                 {quickLinks.map((l, idx) => (
                   <div
                     key={l.href}

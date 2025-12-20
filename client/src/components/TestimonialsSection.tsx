@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
-import testimonial1 from "@assets/generated_images/Customer_testimonial_portrait_male_1abbf207.png";
-import testimonial2 from "@assets/generated_images/Customer_testimonial_portrait_female_090bd0b0.png";
-import testimonial3 from "@assets/generated_images/Senior_customer_testimonial_portrait_7e947acc.png";
+import testimonial1 from "@assets/generated_images/Customer_testimonial_portrait_male_1abbf207.webp";
+import testimonial2 from "@assets/generated_images/Customer_testimonial_portrait_female_090bd0b0.webp";
+import testimonial3 from "@assets/generated_images/Senior_customer_testimonial_portrait_7e947acc.webp";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
