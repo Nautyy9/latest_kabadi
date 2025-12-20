@@ -30,6 +30,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ ok: true });
   });
 
+  // Debug DB/storage diagnostics (dev-only)
+  if (app.get('env') !== 'production') {
+    app.get('/api/debug-db', async (_req, res) => {
+      try {
+        const ok = await pingDb();
+        const diag = (storage as any).diagnostics ? (storage as any).diagnostics() : {};
+        const dbUrl = process.env.DATABASE_URL;
+        let safe: any = {};
+        if (dbUrl) {
+          try {
+            const u = new URL(dbUrl);
+            safe = { host: u.host, sslmode: u.searchParams.get('sslmode') || 'default' };
+          } catch {
+            safe = { host: 'unparsed', sslmode: 'unknown' };
+          }
+        }
+        res.json({ ok, storage: diag, db: safe });
+      } catch (e: any) {
+        res.status(500).json({ ok: false, error: e?.message || String(e) });
+      }
+    });
+  }
+
   // Back-compat Healthcheck (same as readiness)
   app.get("/api/health", async (_req, res) => {
     const ok = await pingDb();

@@ -126,12 +126,12 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // In production, prefer DB but do not exit if unreachable; fall back to MemStorage
-  if (app.get("env") === "production") {
+  // Prefer DB when available; log diagnostics in all envs
+  {
     const { pingDb } = await import('./db/drizzle');
     const ok = await pingDb();
     if (!ok) {
-      log('Database is not reachable. Continuing with in-memory storage fallback.', 'startup');
+      log('Database is not reachable or not configured. Using in-memory storage fallback.', 'startup');
     } else {
       log('Database reachable. Using DB-backed storage.', 'startup');
     }
